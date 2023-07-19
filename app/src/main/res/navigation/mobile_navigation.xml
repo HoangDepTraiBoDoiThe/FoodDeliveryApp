@@ -14,16 +14,22 @@
             />
 
     <fragment
-            android:id="@+id/nav_gallery"
-            android:name="com.example.fooddeliveryapp.ui.gallery.GalleryFragment"
-            android:label="@string/menu_gallery"
-            tools:layout="@layout/fragment_gallery"
+            android:id="@+id/nav_daily_meal"
+            android:name="com.example.fooddeliveryapp.ui.gallery.DailyMealFragment"
+            android:label="@string/daily_meal"
+            tools:layout="@layout/daily_meal_fragment"
             />
 
     <fragment
-            android:id="@+id/nav_slideshow"
-            android:name="com.example.fooddeliveryapp.ui.slideshow.SlideshowFragment"
-            android:label="@string/menu_slideshow"
-            tools:layout="@layout/fragment_slideshow"
+            android:id="@+id/nav_favourite"
+            android:name="com.example.fooddeliveryapp.ui.slideshow.FavouriteFragment"
+            android:label="@string/favourite"
+            tools:layout="@layout/fragment_favourite"
+            />
+    <fragment
+            android:id="@+id/myCartFragment"
+            android:name="com.example.fooddeliveryapp.ui.MyCartFragment"
+            android:label="@string/my_cart"
+            tools:layout="@layout/fragment_my_cart"
             />
 </navigation>

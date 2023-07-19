@@ -8,28 +8,79 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.fooddeliveryapp.Adapters.HomeHorAdapter;
+import com.example.fooddeliveryapp.Adapters.HomeVerAdapter;
+import com.example.fooddeliveryapp.Adapters.UpdateVerticalRec;
+import com.example.fooddeliveryapp.Models.HomeHorModel;
+import com.example.fooddeliveryapp.Models.HomeVerModel;
+import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.databinding.FragmentHomeBinding;
 
-public class HomeFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class HomeFragment extends Fragment implements UpdateVerticalRec {
 
     private FragmentHomeBinding binding;
 
+    RecyclerView homeHorizontalRec, homeVerticalRec;
+    ArrayList<HomeHorModel> homeHorModelList;
+    HomeHorAdapter homeHorAdapter;
+
+
+    //////////// Vertical
+    ArrayList<HomeVerModel> homeVerModelList;
+    HomeVerAdapter homeVerAdapter;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+    ////// Horizontal
+        homeHorModelList = new ArrayList<>();
+        homeHorModelList.add(new HomeHorModel((R.drawable.pizza6), "Pizza"));
+        homeHorModelList.add(new HomeHorModel((R.drawable.burger5), "Burger"));
+        homeHorModelList.add(new HomeHorModel((R.drawable.fries5), "Fries"));
+        homeHorModelList.add(new HomeHorModel((R.drawable.ice_cream5), "Ice cream"));
+        homeHorModelList.add(new HomeHorModel((R.drawable.sandwich5), "Sandwich"));
+
+        homeHorAdapter = new HomeHorAdapter(this, getActivity(), homeHorModelList);
+
+        homeHorizontalRec = root.findViewById(R.id.home_hor_rec);
+        homeHorizontalRec.setAdapter(homeHorAdapter);
+        homeHorizontalRec.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        homeHorizontalRec.setHasFixedSize(true);
+        homeHorizontalRec.setNestedScrollingEnabled(false);
+
+    ////// Vertical
+        homeVerModelList = new ArrayList<>();
+
+        homeVerAdapter = new HomeVerAdapter(getActivity(), homeVerModelList);
+        homeVerticalRec = root.findViewById(R.id.home_ver_rec);
+        homeVerticalRec.setAdapter(homeVerAdapter);
+        homeVerticalRec.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+
         return root;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+
+        if (binding != null) {
+            binding = null;
+        }
+    }
+
+    @Override
+    public void CallBack(int position, ArrayList<HomeVerModel> list) {
+
+        homeVerAdapter = new HomeVerAdapter(getContext(), list);
+        homeVerAdapter.notifyDataSetChanged();
+        homeVerticalRec.setAdapter(homeVerAdapter);
+
     }
 }
