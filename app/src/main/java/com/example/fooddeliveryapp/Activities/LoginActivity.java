@@ -1,9 +1,10 @@
-package com.example.fooddeliveryapp;
+package com.example.fooddeliveryapp.Activities;
 
 import android.content.Intent;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.fooddeliveryapp.R;
 
 public class LoginActivity extends AppCompatActivity {
 

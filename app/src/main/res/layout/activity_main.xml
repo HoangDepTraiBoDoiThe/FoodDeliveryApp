@@ -25,5 +25,19 @@
             android:fitsSystemWindows="true"
             app:headerLayout="@layout/nav_header_main"
             app:menu="@menu/activity_main_drawer"
-            />
+            android:background="@color/gray"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            >
+
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/log_out"
+                android:layout_gravity="bottom"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:padding="15dp"
+                />
+    </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>
