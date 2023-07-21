@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
 
 public class RegistrationActivity extends AppCompatActivity {

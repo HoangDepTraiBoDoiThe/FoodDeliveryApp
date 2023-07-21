@@ -15,14 +15,14 @@
 
     <fragment
             android:id="@+id/nav_daily_meal"
-            android:name="com.example.fooddeliveryapp.ui.gallery.DailyMealFragment"
+            android:name="com.example.fooddeliveryapp.ui.dailymeal.DailyMealFragment"
             android:label="@string/daily_meal"
             tools:layout="@layout/daily_meal_fragment"
             />
 
     <fragment
             android:id="@+id/nav_favourite"
-            android:name="com.example.fooddeliveryapp.ui.slideshow.FavouriteFragment"
+            android:name="com.example.fooddeliveryapp.ui.favourite.FavouriteFragment"
             android:label="@string/favourite"
             tools:layout="@layout/fragment_favourite"
             />
