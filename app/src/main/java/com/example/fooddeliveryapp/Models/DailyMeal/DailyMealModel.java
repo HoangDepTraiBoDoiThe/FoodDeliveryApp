@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.Models;
+package com.example.fooddeliveryapp.Models.DailyMeal;
 
 import android.widget.ImageView;
 
@@ -17,7 +17,7 @@ public class DailyMealModel {
         Discount = discount;
     }
 
-    public DailyMealModel(int img, String name, String type, String description, String discount) {
+    public DailyMealModel(int img, String name, String discount, String description, String type) {
         this.img = img;
         this.name = name;
         this.type = type;

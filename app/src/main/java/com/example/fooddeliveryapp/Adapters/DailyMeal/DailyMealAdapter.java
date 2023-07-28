@@ -1,6 +1,7 @@
-package com.example.fooddeliveryapp.Adapters;
+package com.example.fooddeliveryapp.Adapters.DailyMeal;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.fooddeliveryapp.Models.DailyMealModel;
+import com.example.fooddeliveryapp.Activities.HomePage.DetailedDailyMealActivity;
+import com.example.fooddeliveryapp.Models.DailyMeal.DailyMealModel;
 import com.example.fooddeliveryapp.R;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +31,6 @@ public class DailyMealAdapter extends RecyclerView.Adapter<DailyMealAdapter.View
     @NotNull
     @Override
     public DailyMealAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        Log.d("DailyMealAdapter", "onCreateViewHolder called.");
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.daily_meal_item, parent, false));
     }
 
@@ -39,8 +40,15 @@ public class DailyMealAdapter extends RecyclerView.Adapter<DailyMealAdapter.View
         holder.name.setText(list.get(position).getName());
         holder.description.setText(list.get(position).getDescription());
         holder.discount.setText(list.get(position).getDiscount());
-        Log.d("DailyMealAdapter", "onBindViewHolder called for position " + position);
 
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailedDailyMealActivity.class);
+                intent.putExtra("type", list.get(position).getType());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -60,7 +68,6 @@ public class DailyMealAdapter extends RecyclerView.Adapter<DailyMealAdapter.View
             name = itemView.findViewById(R.id.daily_meal_name);
             description = itemView.findViewById(R.id.daily_meal_des);
             discount = itemView.findViewById(R.id.daily_meal_discount);
-            Log.d("DailyMealAdapter", "ViewHolder created.");
         }
     }
 }

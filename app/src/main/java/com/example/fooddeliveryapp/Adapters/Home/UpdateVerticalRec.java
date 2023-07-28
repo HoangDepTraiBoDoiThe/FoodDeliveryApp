@@ -1,6 +1,6 @@
-package com.example.fooddeliveryapp.Adapters;
+package com.example.fooddeliveryapp.Adapters.Home;
 
-import com.example.fooddeliveryapp.Models.HomeVerModel;
+import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 
 import java.util.ArrayList;
 

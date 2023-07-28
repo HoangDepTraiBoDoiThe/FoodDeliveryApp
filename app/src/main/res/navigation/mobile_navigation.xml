@@ -15,7 +15,7 @@
 
     <fragment
             android:id="@+id/nav_daily_meal"
-            android:name="com.example.fooddeliveryapp.ui.dailymeal.DailyMealFragment"
+            android:name="com.example.fooddeliveryapp.ui.home.dailymeal.DailyMealFragment"
             android:label="@string/daily_meal"
             tools:layout="@layout/daily_meal_fragment"
             />

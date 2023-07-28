@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.dailymeal.DailyMealFragment"
+        tools:context=".ui.home.dailymeal.DailyMealFragment"
         android:background="@color/medium_gray"
         >
 

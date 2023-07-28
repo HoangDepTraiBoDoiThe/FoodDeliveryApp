@@ -1,7 +1,6 @@
-package com.example.fooddeliveryapp.Adapters;
+package com.example.fooddeliveryapp.Adapters.Home;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.fooddeliveryapp.Models.HomeHorModel;
-import com.example.fooddeliveryapp.Models.HomeVerModel;
+import com.example.fooddeliveryapp.Models.Home.HomeHorModel;
+import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHolder> {
 

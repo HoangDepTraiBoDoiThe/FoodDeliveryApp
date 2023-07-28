@@ -4,22 +4,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.fooddeliveryapp.Adapters.HomeHorAdapter;
-import com.example.fooddeliveryapp.Adapters.HomeVerAdapter;
-import com.example.fooddeliveryapp.Adapters.UpdateVerticalRec;
-import com.example.fooddeliveryapp.Models.HomeHorModel;
-import com.example.fooddeliveryapp.Models.HomeVerModel;
+import com.example.fooddeliveryapp.Adapters.Home.HomeHorAdapter;
+import com.example.fooddeliveryapp.Adapters.Home.HomeVerAdapter;
+import com.example.fooddeliveryapp.Adapters.Home.UpdateVerticalRec;
+import com.example.fooddeliveryapp.Models.Home.HomeHorModel;
+import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeFragment extends Fragment implements UpdateVerticalRec {
 

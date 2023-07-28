@@ -1,9 +1,10 @@
-package com.example.fooddeliveryapp.Activities;
+package com.example.fooddeliveryapp.Activities.LoginSignin;
 
 import android.content.Intent;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.fooddeliveryapp.Activities.HomePage.HomePage;
 import com.example.fooddeliveryapp.R;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -19,6 +20,6 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void MainActivity(View view) {
-        startActivities(new Intent[] {new Intent(RegistrationActivity.this, MainActivity.class)});
+        startActivities(new Intent[] {new Intent(RegistrationActivity.this, HomePage.class)});
     }
 }

@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.Models;
+package com.example.fooddeliveryapp.Models.Home;
 
 public class HomeHorModel {
 

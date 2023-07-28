@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.ui.dailymeal;
+package com.example.fooddeliveryapp.ui.home.dailymeal;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,8 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.fooddeliveryapp.Adapters.DailyMealAdapter;
-import com.example.fooddeliveryapp.Models.DailyMealModel;
+import com.example.fooddeliveryapp.Adapters.DailyMeal.DailyMealAdapter;
+import com.example.fooddeliveryapp.Models.DailyMeal.DailyMealModel;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.databinding.DailyMealFragmentBinding;
 
@@ -31,11 +31,11 @@ public class DailyMealFragment extends Fragment {
 
         recyclerView = root.findViewById(R.id.daily_meal_rec);
         dailyMealModels = new ArrayList<>();
-        dailyMealModels.add(new DailyMealModel(R.drawable.breakfast, "Breakfast", "30% off", "Description"));
-        dailyMealModels.add(new DailyMealModel(R.drawable.lunch, "Lunch", "30% off", "Description"));
-        dailyMealModels.add(new DailyMealModel(R.drawable.dinner, "Dinner", "30% off", "Description"));
-        dailyMealModels.add(new DailyMealModel(R.drawable.sweets, "Sweets", "30% off", "Description"));
-        dailyMealModels.add(new DailyMealModel(R.drawable.coffe, "Coffee", "30% off", "Description"));
+        dailyMealModels.add(new DailyMealModel(R.drawable.breakfast, "Breakfast", "30% off", "Description", "breakfast"));
+        dailyMealModels.add(new DailyMealModel(R.drawable.lunch, "Lunch", "30% off", "Description", "lunch"));
+        dailyMealModels.add(new DailyMealModel(R.drawable.dinner, "Dinner", "30% off", "Description", "dinner"));
+        dailyMealModels.add(new DailyMealModel(R.drawable.sweets, "Sweets", "30% off", "Description", "sweets"));
+        dailyMealModels.add(new DailyMealModel(R.drawable.coffe, "Coffee", "30% off", "Description", "coffe"));
 
         dailyMealAdapter = new DailyMealAdapter(getContext(), dailyMealModels);
         recyclerView.setAdapter(dailyMealAdapter);

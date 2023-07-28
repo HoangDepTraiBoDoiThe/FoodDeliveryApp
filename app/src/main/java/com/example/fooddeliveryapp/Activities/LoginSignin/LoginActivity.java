@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.Activities;
+package com.example.fooddeliveryapp.Activities.LoginSignin;
 
 import android.content.Intent;
 import android.view.View;

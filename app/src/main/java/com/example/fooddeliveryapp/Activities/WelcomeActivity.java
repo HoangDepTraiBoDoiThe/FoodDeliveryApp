@@ -6,6 +6,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.fooddeliveryapp.Activities.LoginSignin.LoginActivity;
+import com.example.fooddeliveryapp.Activities.LoginSignin.RegistrationActivity;
 import com.example.fooddeliveryapp.R;
 
 public class WelcomeActivity extends AppCompatActivity {
