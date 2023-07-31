@@ -1,10 +1,10 @@
 package com.example.fooddeliveryapp.Adapters.Home;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -13,10 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fooddeliveryapp.Models.Home.HomeHorModel;
 import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
-import com.google.firebase.database.FirebaseDatabase;
-import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHolder> {
 
@@ -35,24 +38,53 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
     }
 
     @NonNull
-    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.home_horizontal_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int AdapterPosition = holder.getAdapterPosition();
+
         holder.imageView.setImageResource(list.get(AdapterPosition).getImage());
         holder.name.setText(list.get(AdapterPosition).getName());
+
+        // Load data from JSON file
+        try {
+            JSONArray itemsArray = loadJSONFromRaw(activity.getResources(), R.raw.food_items);
+            if (itemsArray != null) {
+                JSONObject itemObject = itemsArray.getJSONObject(AdapterPosition);
+                int imageResId = getResourceIdByName(itemObject.getString("image"));
+                String name = itemObject.getString("name");
+                String timing = itemObject.getString("timing");
+                String rating = itemObject.getString("rating");
+                String price = itemObject.getString("price");
+                // ... Use timing, rating, and price if needed
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         if (check) {
             ArrayList<HomeVerModel> homeVerModels = new ArrayList<>();
-            homeVerModels.add(new HomeVerModel(R.drawable.pizza1, "Pizza 1 ", "10:00 - 23:00", "5.0", "Min - 34$"));
-            homeVerModels.add(new HomeVerModel(R.drawable.pizza2, "Pizza 2", "10:00 - 23:00", "5.0", "Min - 34$"));
-            homeVerModels.add(new HomeVerModel(R.drawable.pizza3, "Pizza 3", "10:00 - 23:00", "5.0", "Min - 34$"));
-            homeVerModels.add(new HomeVerModel(R.drawable.pizza4, "Pizza 4", "10:00 - 23:00", "5.0", "Min - 34$"));
+            // Load data for the first item from JSON
+            try {
+                JSONArray itemsArray = loadJSONFromRaw(activity.getResources(), R.raw.food_items);
+                if (itemsArray != null) {
+                    for (int i = 0; i < itemsArray.length(); i++) {
+                        JSONObject itemObject = itemsArray.getJSONObject(i);
+                        int imageResId = getResourceIdByName(itemObject.getString("image"));
+                        String name = itemObject.getString("name");
+                        String timing = itemObject.getString("timing");
+                        String rating = itemObject.getString("rating");
+                        String price = itemObject.getString("price");
+                        homeVerModels.add(new HomeVerModel(imageResId, name, timing, rating, price));
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
             updateVerticalRec.CallBack(AdapterPosition, homeVerModels);
 
@@ -65,42 +97,22 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
                 row_index = AdapterPosition;
                 notifyDataSetChanged();
 
-                if (AdapterPosition == 0) {
-
-                    ArrayList<HomeVerModel> homeVerModels = new ArrayList<>();
-                    homeVerModels.add(new HomeVerModel(R.drawable.pizza1, "Pizza 1 ", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.pizza2, "Pizza 2", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.pizza3, "Pizza 3", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.pizza4, "Pizza 4", "10:00 - 23:00", "5.0", "Min - 34$"));
-
-                    updateVerticalRec.CallBack(AdapterPosition, homeVerModels);
-                } else if (AdapterPosition == 1) {
-                    ArrayList<HomeVerModel> homeVerModels = new ArrayList<>();
-                    homeVerModels.add(new HomeVerModel(R.drawable.burger1, "Burger 1 ", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.burger2, "Burger 2", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.burger4, "Burger 4", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    updateVerticalRec.CallBack(AdapterPosition, homeVerModels);
-                } else if (AdapterPosition == 2) {
-                    ArrayList<HomeVerModel> homeVerModels = new ArrayList<>();
-                    homeVerModels.add(new HomeVerModel(R.drawable.fries1, "Fries 1 ", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.fries2, "Fries 2", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.fries3, "Fries 3", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.fries4, "Fries 4", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    updateVerticalRec.CallBack(AdapterPosition, homeVerModels);
-                } else if (AdapterPosition == 3) {
-                    ArrayList<HomeVerModel> homeVerModels = new ArrayList<>();
-                    homeVerModels.add(new HomeVerModel(R.drawable.icecream1, "Ice cream 1 ", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.icecream2, "Ice cream 2", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.icecream3, "Ice cream 3", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.icecream4, "Ice cream 4", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    updateVerticalRec.CallBack(AdapterPosition, homeVerModels);
-                } else if (AdapterPosition == 4) {
-                    ArrayList<HomeVerModel> homeVerModels = new ArrayList<>();
-                    homeVerModels.add(new HomeVerModel(R.drawable.sandwich1, "Sandwich 1 ", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.sandwich2, "Sandwich 2", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.sandwich3, "Sandwich 3", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    homeVerModels.add(new HomeVerModel(R.drawable.sandwich4, "Sandwich 4", "10:00 - 23:00", "5.0", "Min - 34$"));
-                    updateVerticalRec.CallBack(AdapterPosition, homeVerModels);
+                // Load data for the selected item from JSON
+                try {
+                    JSONArray itemsArray = loadJSONFromRaw(activity.getResources(), R.raw.food_items);
+                    if (itemsArray != null) {
+                        JSONObject itemObject = itemsArray.getJSONObject(AdapterPosition);
+                        ArrayList<HomeVerModel> homeVerModels = new ArrayList<>();
+                        int imageResId = getResourceIdByName(itemObject.getString("image"));
+                        String name = itemObject.getString("name");
+                        String timing = itemObject.getString("timing");
+                        String rating = itemObject.getString("rating");
+                        String price = itemObject.getString("price");
+                        homeVerModels.add(new HomeVerModel(imageResId, name, timing, rating, price));
+                        updateVerticalRec.CallBack(AdapterPosition, homeVerModels);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -120,20 +132,43 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
     }
 
     @Override
-    public int getItemCount() { return list.size(); }
+    public int getItemCount() {
+        return list.size();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
         TextView name;
-
         CardView cardView;
-        public ViewHolder(@NonNull @NotNull View itemView) {
-            super(itemView);
 
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
             imageView = itemView.findViewById(R.id.hor_img);
             name = itemView.findViewById(R.id.hor_text);
             cardView = itemView.findViewById(R.id.cardview);
         }
+    }
+
+    // Helper method to load JSON data from raw resource
+    private JSONArray loadJSONFromRaw(Resources resources, int resourceId) {
+        try {
+            InputStream inputStream = resources.openRawResource(resourceId);
+            Scanner scanner = new Scanner(inputStream);
+            StringBuilder jsonString = new StringBuilder();
+            while (scanner.hasNext()) {
+                jsonString.append(scanner.nextLine());
+            }
+            scanner.close();
+            return new JSONObject(jsonString.toString()).getJSONArray("items");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // Helper method to get resource ID by name
+    private int getResourceIdByName(String name) {
+        return activity.getResources().getIdentifier(name, "drawable", activity.getPackageName());
     }
 }

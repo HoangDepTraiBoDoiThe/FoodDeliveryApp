@@ -1,0 +1,137 @@
+{
+  "items": [
+    {
+      "image": "pizza1",
+      "name": "Pizza 1",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "pizza2",
+      "name": "Pizza 2",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "pizza3",
+      "name": "Pizza 3",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "pizza4",
+      "name": "Pizza 4",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "burger1",
+      "name": "Burger 1",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "burger2",
+      "name": "Burger 2",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "burger4",
+      "name": "Burger 4",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "fries1",
+      "name": "Fries 1",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "fries2",
+      "name": "Fries 2",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "fries3",
+      "name": "Fries 3",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "fries4",
+      "name": "Fries 4",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "icecream1",
+      "name": "Ice cream 1",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "icecream2",
+      "name": "Ice cream 2",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "icecream3",
+      "name": "Ice cream 3",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "icecream4",
+      "name": "Ice cream 4",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "sandwich1",
+      "name": "Sandwich 1",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "sandwich2",
+      "name": "Sandwich 2",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "sandwich3",
+      "name": "Sandwich 3",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    },
+    {
+      "image": "sandwich4",
+      "name": "Sandwich 4",
+      "timing": "10:00 - 23:00",
+      "rating": "5.0",
+      "price": "Min - 34$"
+    }
+  ]
+}
