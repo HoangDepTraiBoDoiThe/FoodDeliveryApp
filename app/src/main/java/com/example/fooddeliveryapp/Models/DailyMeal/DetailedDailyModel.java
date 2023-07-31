@@ -10,8 +10,13 @@ public class DetailedDailyModel {
 
     String id;
 
-    public DetailedDailyModel(int image, String name, String description, String rating, String price, String timing) {
+    public DetailedDailyModel() {
+
+    }
+
+    public DetailedDailyModel(String description, String id, int image, String name,String price, String rating, String timing) {
         this.image = image;
+        this.id = id;
         this.name = name;
         this.description = description;
         this.rating = rating;

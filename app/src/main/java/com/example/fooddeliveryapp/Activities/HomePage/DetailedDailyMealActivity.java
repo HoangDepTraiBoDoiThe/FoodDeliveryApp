@@ -1,14 +1,17 @@
 package com.example.fooddeliveryapp.Activities.HomePage;
 
 import android.widget.ImageView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.fooddeliveryapp.Adapters.DailyMeal.DetailedDailyAdapter;
 import com.example.fooddeliveryapp.Models.DailyMeal.DetailedDailyModel;
+import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
 
+import com.google.firebase.database.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,40 +43,34 @@ public class DetailedDailyMealActivity extends AppCompatActivity {
         detailedDailyAdapter = new DetailedDailyAdapter(detailedDailyModels);
         recyclerView.setAdapter(detailedDailyAdapter);
 
-        // Load data from JSON file
-        try {
-            JSONArray itemArray = loadJSONFromRaw(getResources(), R.raw.detailed_daily_meal);
-            if (itemArray != null) {
+        getDataFromFirebase ();
+    }
 
-                JSONArray typeObject = null;
+    public void getDataFromFirebase ()
+    {
+        DatabaseReference foodsRef = FirebaseDatabase.getInstance().getReference("foods");
+        foodsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<DetailedDailyModel> foodsList = new ArrayList<>();
+                for (DataSnapshot foodSnapshot : dataSnapshot.getChildren()) {
+                    // Extract data from the snapshot and create a foods object
+                    DetailedDailyModel foodName = foodSnapshot.getValue(DetailedDailyModel.class);
 
-                for (int i = 0; i < itemArray.length(); i++) {
-                    JSONObject itemObject = itemArray.getJSONObject(i);
-                    typeObject = itemObject.getJSONArray(type);
+
+                    // Add the foods object to the list
+                    foodsList.add(foodName);
                 }
 
-                if (typeObject != null) {
-                    imageView.setImageResource(getResourceIdByName(typeObject.getJSONObject(0).getString("type")));
-                   // JSONArray itemsArray = typeObject.getJSONArray("items");
-                    for (int i = 0; i < typeObject.length(); i++) {
-                        JSONObject itemObject = typeObject.getJSONObject(i);
-
-                        int imageResId = getResourceIdByName(itemObject.getString("image"));
-                        String name = itemObject.getString("name");
-                        String description = itemObject.getString("description");
-                        String rating = itemObject.getString("rating");
-                        String price = itemObject.getString("price");
-                        String timing = itemObject.getString("timing");
-
-                        detailedDailyModels.add(new DetailedDailyModel(imageResId, name, description, rating, price, timing));
-                    }
-
-                    detailedDailyAdapter.notifyDataSetChanged();
-                }
+                detailedDailyAdapter.notifyDataSetChanged();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle database errors, if any
+            }
+        });
+
     }
 
     // Helper method to load JSON data from raw resource

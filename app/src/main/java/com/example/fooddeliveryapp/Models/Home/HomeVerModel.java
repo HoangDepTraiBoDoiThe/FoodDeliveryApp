@@ -2,69 +2,86 @@ package com.example.fooddeliveryapp.Models.Home;
 
 public class HomeVerModel {
 
-    int Image;
-    String Name;
-    String Timing;
-    String Rating;
-    String Price;
-
+    int image;
+    String name;
+    String description;
+    String rating;
+    String price;
+    String timing;
     String type;
+    String id;
 
-    public HomeVerModel(int image, String name, String timing, String rating, String price) {
-        Image = image;
-        Name = name;
-        Timing = timing;
-        Rating = rating;
-        Price = price;
+    public HomeVerModel() {
+
     }
 
-    public HomeVerModel(int image, String name, String timing, String rating, String price, String type) {
-        Image = image;
-        Name = name;
-        Timing = timing;
-        Rating = rating;
-        Price = price;
+    public HomeVerModel(String id, String name, String description, int image, String price, String rating, String timing, String type) {
+        this.image = image;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.rating = rating;
+        this.price = price;
+        this.timing = timing;
         this.type = type;
     }
 
+
+
     public int getImage() {
-        return Image;
+        return image;
     }
 
     public void setImage(int image) {
-        Image = image;
+        this.image = image;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
-    public String getTiming() {
-        return Timing;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTiming(String timing) {
-        Timing = timing;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getRating() {
-        return Rating;
+        return rating;
     }
 
     public void setRating(String rating) {
-        Rating = rating;
+        this.rating = rating;
     }
 
     public String getPrice() {
-        return Price;
+        return price;
     }
 
     public void setPrice(String price) {
-        Price = price;
+        this.price = price;
+    }
+
+    public String getTiming() {
+        return timing;
+    }
+
+    public void setTiming(String timing) {
+        this.timing = timing;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getType() {
