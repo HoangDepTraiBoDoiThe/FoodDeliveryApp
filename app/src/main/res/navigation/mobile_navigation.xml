@@ -27,8 +27,8 @@
             tools:layout="@layout/fragment_favourite"
             />
     <fragment
-            android:id="@+id/myCartFragment"
-            android:name="com.example.fooddeliveryapp.ui.Cart.MyCartFragment"
+            android:id="@+id/nav_my_cart"
+            android:name="com.example.fooddeliveryapp.ui.Cart.CartFragment"
             android:label="@string/my_cart"
             tools:layout="@layout/fragment_my_cart"
             />
