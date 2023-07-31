@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.fooddeliveryapp.Models.Featured.FeaturedModel;
+import com.example.fooddeliveryapp.Models.Featured.FeaturedVerModel;
 import com.example.fooddeliveryapp.R;
 import org.jetbrains.annotations.NotNull;
 
