@@ -165,7 +165,7 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
             }
             scanner.close();
             JSONObject jsonObject = new JSONObject(jsonString.toString());
-            JSONArray itemArray = jsonObject.getJSONArray("item");
+            JSONArray itemArray = jsonObject.getJSONArray("food_items");
             return itemArray;
 
         }

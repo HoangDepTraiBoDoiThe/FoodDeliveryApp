@@ -8,12 +8,23 @@ public class HomeVerModel {
     String Rating;
     String Price;
 
+    String type;
+
     public HomeVerModel(int image, String name, String timing, String rating, String price) {
         Image = image;
         Name = name;
         Timing = timing;
         Rating = rating;
         Price = price;
+    }
+
+    public HomeVerModel(int image, String name, String timing, String rating, String price, String type) {
+        Image = image;
+        Name = name;
+        Timing = timing;
+        Rating = rating;
+        Price = price;
+        this.type = type;
     }
 
     public int getImage() {
@@ -54,5 +65,13 @@ public class HomeVerModel {
 
     public void setPrice(String price) {
         Price = price;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

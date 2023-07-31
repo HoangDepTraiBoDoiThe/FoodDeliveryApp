@@ -8,6 +8,8 @@ public class DetailedDailyModel {
     String price;
     String timing;
 
+    String id;
+
     public DetailedDailyModel(int image, String name, String description, String rating, String price, String timing) {
         this.image = image;
         this.name = name;
@@ -63,5 +65,13 @@ public class DetailedDailyModel {
 
     public void setTiming(String timing) {
         this.timing = timing;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
