@@ -43,26 +43,39 @@ public class DetailedDailyMealActivity extends AppCompatActivity {
         detailedDailyAdapter = new DetailedDailyAdapter(detailedDailyModels);
         recyclerView.setAdapter(detailedDailyAdapter);
 
-        getDataFromFirebase ();
+        getDataFromFirebase (type);
     }
 
-    public void getDataFromFirebase ()
+    public void getDataFromFirebase (String typeOfFood)
     {
         DatabaseReference foodsRef = FirebaseDatabase.getInstance().getReference("foods");
         foodsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<DetailedDailyModel> foodsList = new ArrayList<>();
                 for (DataSnapshot foodSnapshot : dataSnapshot.getChildren()) {
-                    // Extract data from the snapshot and create a foods object
-                    DetailedDailyModel foodName = foodSnapshot.getValue(DetailedDailyModel.class);
 
-
-                    // Add the foods object to the list
-                    foodsList.add(foodName);
+                    String foodType = foodSnapshot.child("foodType").getValue(String.class);
+                    String foodID = null;
+                    String foodName = null;
+                    String foodDes = null;
+                    String foodTiming = null;
+                    String foodRating = null;
+                    String foodPrice = null;
+                    int imageResId = 0;
+                    if (foodType.equals(typeOfFood)) {
+                        // Extract data from the snapshot and create a foods object
+                        foodID = foodSnapshot.child("foodID").getValue(String.class);
+                        foodName = foodSnapshot.child("foodName").getValue(String.class);
+                        foodDes = foodSnapshot.child("foodDescription").getValue(String.class);
+                        foodTiming = foodSnapshot.child("foodTiming").getValue(String.class);
+                        foodRating = foodSnapshot.child("foodRatting").getValue(String.class);
+                        foodPrice = String.valueOf(foodSnapshot.child("foodPrice").getValue(Integer.class)) + ",00$";
+                        imageResId = getResourceIdByName(foodSnapshot.child("foodImage").getValue(String.class));
+                        // Add the foods object to the list
+                        detailedDailyModels.add(new DetailedDailyModel(foodID, foodName, foodDes, imageResId, foodPrice, foodRating, foodTiming, foodType));
+                    }
+                    detailedDailyAdapter.notifyDataSetChanged();
                 }
-
-                detailedDailyAdapter.notifyDataSetChanged();
             }
 
             @Override

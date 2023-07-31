@@ -7,14 +7,14 @@ public class DetailedDailyModel {
     String rating;
     String price;
     String timing;
-
+    String type;
     String id;
 
     public DetailedDailyModel() {
 
     }
 
-    public DetailedDailyModel(String description, String id, int image, String name,String price, String rating, String timing) {
+    public DetailedDailyModel(String id, String name, String description, int image, String price, String rating, String timing, String type) {
         this.image = image;
         this.id = id;
         this.name = name;
@@ -22,6 +22,15 @@ public class DetailedDailyModel {
         this.rating = rating;
         this.price = price;
         this.timing = timing;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getImage() {
