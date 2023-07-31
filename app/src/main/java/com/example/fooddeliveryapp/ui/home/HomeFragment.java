@@ -38,11 +38,11 @@ public class HomeFragment extends Fragment implements UpdateVerticalRec {
 
     ////// Horizontal
         homeHorModelList = new ArrayList<>();
-        homeHorModelList.add(new HomeHorModel((R.drawable.pizza6), "Pizza"));
-        homeHorModelList.add(new HomeHorModel((R.drawable.burger5), "Burger"));
-        homeHorModelList.add(new HomeHorModel((R.drawable.fries5), "Fries"));
-        homeHorModelList.add(new HomeHorModel((R.drawable.ice_cream5), "Ice cream"));
-        homeHorModelList.add(new HomeHorModel((R.drawable.sandwich5), "Sandwich"));
+        homeHorModelList.add(new HomeHorModel((R.drawable.pizza6), "Pizza", "pizza"));
+        homeHorModelList.add(new HomeHorModel((R.drawable.burger5), "Burger", "burger"));
+        homeHorModelList.add(new HomeHorModel((R.drawable.fries5), "Fries", "fries"));
+        homeHorModelList.add(new HomeHorModel((R.drawable.ice_cream5), "Ice cream", "icecream"));
+        homeHorModelList.add(new HomeHorModel((R.drawable.sandwich5), "Sandwich", "sandwich"));
 
         homeHorAdapter = new HomeHorAdapter(this, getActivity(), homeHorModelList);
 

@@ -3,11 +3,12 @@ package com.example.fooddeliveryapp.Models.Home;
 public class HomeHorModel {
 
     int Image;
-    String Name;
+    String Name, id;
 
-    public HomeHorModel(int image, String name) {
+    public HomeHorModel(int image, String name, String id) {
         Image = image;
         Name = name;
+        this.id = id;
     }
 
     public int getImage() {
@@ -24,5 +25,13 @@ public class HomeHorModel {
 
     public void setName(String name) {
         Name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -52,7 +52,7 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
 
         // Load data from JSON file
         try {
-            JSONArray itemsArray = loadJSONFromRaw(activity.getResources(), R.raw.food_items);
+            JSONArray itemsArray = loadJSONFromRaw(activity.getResources(), R.raw.food_items, "pizza");
             if (itemsArray != null) {
                 JSONObject itemObject = itemsArray.getJSONObject(AdapterPosition);
                 int imageResId = getResourceIdByName(itemObject.getString("image"));
@@ -70,7 +70,7 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
             ArrayList<HomeVerModel> homeVerModels = new ArrayList<>();
             // Load data for the first item from JSON
             try {
-                JSONArray itemsArray = loadJSONFromRaw(activity.getResources(), R.raw.food_items);
+                JSONArray itemsArray = loadJSONFromRaw(activity.getResources(), R.raw.food_items, "pizza");
                 if (itemsArray != null) {
                     for (int i = 0; i < itemsArray.length(); i++) {
                         JSONObject itemObject = itemsArray.getJSONObject(i);
@@ -99,16 +99,20 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
 
                 // Load data for the selected item from JSON
                 try {
-                    JSONArray itemsArray = loadJSONFromRaw(activity.getResources(), R.raw.food_items);
+                    String itemName = list.get(AdapterPosition).getId();
+                    JSONArray itemsArray = loadJSONFromRaw(activity.getResources(), R.raw.food_items, itemName.toLowerCase());
                     if (itemsArray != null) {
-                        JSONObject itemObject = itemsArray.getJSONObject(AdapterPosition);
                         ArrayList<HomeVerModel> homeVerModels = new ArrayList<>();
-                        int imageResId = getResourceIdByName(itemObject.getString("image"));
-                        String name = itemObject.getString("name");
-                        String timing = itemObject.getString("timing");
-                        String rating = itemObject.getString("rating");
-                        String price = itemObject.getString("price");
-                        homeVerModels.add(new HomeVerModel(imageResId, name, timing, rating, price));
+                        for (int i = 0; i < itemsArray.length(); i++) {
+                            JSONObject itemObject = itemsArray.getJSONObject(i);
+
+                            int imageResId = getResourceIdByName(itemObject.getString("image"));
+                            String name = itemObject.getString("name");
+                            String timing = itemObject.getString("timing");
+                            String rating = itemObject.getString("rating");
+                            String price = itemObject.getString("price");
+                            homeVerModels.add(new HomeVerModel(imageResId, name, timing, rating, price));
+                        }
                         updateVerticalRec.CallBack(AdapterPosition, homeVerModels);
                     }
                 } catch (JSONException e) {
@@ -150,9 +154,9 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
         }
     }
 
-    // Helper method to load JSON data from raw resource
-    private JSONArray loadJSONFromRaw(Resources resources, int resourceId) {
+    private JSONArray GetItemArray(Resources resources, int resourceId) {
         try {
+
             InputStream inputStream = resources.openRawResource(resourceId);
             Scanner scanner = new Scanner(inputStream);
             StringBuilder jsonString = new StringBuilder();
@@ -160,12 +164,37 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
                 jsonString.append(scanner.nextLine());
             }
             scanner.close();
-            return new JSONObject(jsonString.toString()).getJSONArray("items");
-        } catch (Exception e) {
+            JSONObject jsonObject = new JSONObject(jsonString.toString());
+            JSONArray itemArray = jsonObject.getJSONArray("item");
+            return itemArray;
+
+        }
+        catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
+    // Helper method to load JSON data from raw resource
+    private JSONArray loadJSONFromRaw(Resources resources, int resourceId, String name) {
+
+        try {
+
+            JSONArray itemArray = GetItemArray(resources, resourceId);
+            JSONArray pizzaArray = null;
+            for (int i = 0; i < itemArray.length(); i++) {
+                JSONObject itemObject = itemArray.getJSONObject(i);
+                pizzaArray = itemObject.getJSONArray(name);
+            }
+            return pizzaArray;
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     // Helper method to get resource ID by name
     private int getResourceIdByName(String name) {
