@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.Fragment;
+package com.example.fooddeliveryapp.ui.favourite.Fragment;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;

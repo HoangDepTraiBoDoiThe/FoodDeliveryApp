@@ -8,14 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.fooddeliveryapp.Adapters.DailyMeal.DetailedDailyAdapter;
 import com.example.fooddeliveryapp.Models.DailyMeal.DetailedDailyModel;
-import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
-
 import com.google.firebase.database.*;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;

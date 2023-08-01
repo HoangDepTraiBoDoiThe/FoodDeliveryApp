@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
-import com.example.fooddeliveryapp.Fragment.FragmentAdapter;
+import com.example.fooddeliveryapp.ui.favourite.Fragment.FragmentAdapter;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.databinding.FragmentFavouriteBinding;
 import com.google.android.material.tabs.TabLayout;

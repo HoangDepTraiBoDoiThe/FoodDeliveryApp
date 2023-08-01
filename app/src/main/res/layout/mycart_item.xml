@@ -51,6 +51,23 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         />
 
+                <TextView
+                        android:id="@+id/detailed_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/amarante"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="1"
+                        android:textColor="@color/black"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/add2favourite"
+                        app:layout_constraintStart_toEndOf="@+id/detailed_name"
+                        />
+
                 <CheckBox
                         android:id="@+id/add2favourite"
                         android:layout_width="30dp"
