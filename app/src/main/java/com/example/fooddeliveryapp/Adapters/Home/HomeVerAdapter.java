@@ -192,7 +192,7 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
         });
     }
 
-    interface OnFetchFavoritesListener {
+    public interface OnFetchFavoritesListener {
         void onFavoritesFetched(List<String> favoriteFoodIDs);
     }
 

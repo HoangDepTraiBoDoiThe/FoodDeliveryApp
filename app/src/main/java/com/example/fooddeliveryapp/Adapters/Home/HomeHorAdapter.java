@@ -29,7 +29,6 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
     UpdateVerticalRec updateVerticalRec;
     Activity activity;
     ArrayList<HomeHorModel> list;
-
     boolean check = true;
     boolean select = true;
     int row_index = -1;
@@ -52,22 +51,6 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
 
         holder.imageView.setImageResource(list.get(AdapterPosition).getImage());
         holder.name.setText(list.get(AdapterPosition).getName());
-//
-//        // Load data from JSON file
-//        try {
-//            JSONArray itemsArray = loadJSONFromRaw(activity.getResources(), R.raw.food_items, "pizza");
-//            if (itemsArray != null) {
-//                JSONObject itemObject = itemsArray.getJSONObject(AdapterPosition);
-//                int imageResId = getResourceIdByName(itemObject.getString("image"));
-//                String name = itemObject.getString("name");
-//                String timing = itemObject.getString("timing");
-//                String rating = itemObject.getString("rating");
-//                String price = itemObject.getString("price");
-//                // ... Use timing, rating, and price if needed
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
 
         if (check) {
             getDataFromFirebase(AdapterPosition, "pizza");

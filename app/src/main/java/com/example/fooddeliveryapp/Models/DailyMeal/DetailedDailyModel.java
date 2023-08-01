@@ -9,6 +9,7 @@ public class DetailedDailyModel {
     String timing;
     String type;
     String id;
+    boolean isFavorite;
 
     public DetailedDailyModel() {
 
@@ -23,6 +24,18 @@ public class DetailedDailyModel {
         this.price = price;
         this.timing = timing;
         this.type = type;
+    }
+
+    public DetailedDailyModel(String id, String name, String description, int image, String price, String rating, String timing, String type, boolean isFavorite) {
+        this.image = image;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.rating = rating;
+        this.price = price;
+        this.timing = timing;
+        this.type = type;
+        this.isFavorite = isFavorite;
     }
 
     public String getType() {
@@ -87,5 +100,13 @@ public class DetailedDailyModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }

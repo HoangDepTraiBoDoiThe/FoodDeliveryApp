@@ -33,10 +33,12 @@ public class DetailedDailyMealActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.detailed_rec);
         imageView = findViewById(R.id.detailed_tittle_img);
+        imageView.setImageResource(getResourceIdByName(type));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         detailedDailyModels = new ArrayList<>();
-        detailedDailyAdapter = new DetailedDailyAdapter(detailedDailyModels);
+        detailedDailyAdapter = new DetailedDailyAdapter(detailedDailyModels, this);
+
         recyclerView.setAdapter(detailedDailyAdapter);
 
         getDataFromFirebase (type);

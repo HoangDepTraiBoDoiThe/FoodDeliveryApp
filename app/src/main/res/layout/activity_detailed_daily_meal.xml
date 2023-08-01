@@ -58,18 +58,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_shopping_cart_24"
-            android:backgroundTint="@color/purple_500"
-            android:baselineAlignBottom="false"
-            app:fabSize="normal"
-            app:layout_anchorGravity="end|bottom"
-            app:layout_anchor="@id/appBar"
-            android:layout_marginRight="20dp"
-            android:clickable="true"
-            android:tint="@null"
-            />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
