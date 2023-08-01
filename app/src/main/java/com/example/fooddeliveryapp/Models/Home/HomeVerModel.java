@@ -11,6 +11,8 @@ public class HomeVerModel {
     String type;
     String id;
 
+    boolean isFavorite;
+
     public HomeVerModel() {
 
     }
@@ -26,6 +28,17 @@ public class HomeVerModel {
         this.type = type;
     }
 
+    public HomeVerModel(String id, String name, String description, int image, String price, String rating, String timing, String type, boolean isFavorite) {
+        this.image = image;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.rating = rating;
+        this.price = price;
+        this.timing = timing;
+        this.type = type;
+        this.isFavorite = isFavorite;
+    }
 
 
     public int getImage() {
@@ -90,5 +103,13 @@ public class HomeVerModel {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }

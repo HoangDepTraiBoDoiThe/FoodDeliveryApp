@@ -15,6 +15,8 @@ import com.example.fooddeliveryapp.Adapters.Featured.FeaturedVerAdapter;
 import com.example.fooddeliveryapp.Models.Featured.FeaturedModel;
 import com.example.fooddeliveryapp.Models.Featured.FeaturedVerModel;
 import com.example.fooddeliveryapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.*;
 import com.google.firebase.database.*;
@@ -97,6 +99,24 @@ public class FirstFragment extends Fragment {
             }
         });
     }
+
+    private void removeFromFavorite(String foodID) {
+        DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("users")
+                .child(hardcodedUserID).child("favorites");
+
+        favoritesRef.child(foodID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    // Successfully removed the foodID from the user's favorite list
+                    // You can add any UI updates here if needed
+                } else {
+                    // Handle error if the removal was not successful
+                }
+            }
+        });
+    }
+
     private void fetchFavoriteFoodsDetails(List<String> favoriteFoodIDs) {
         DatabaseReference foodsRef = FirebaseDatabase.getInstance().getReference("foods");
         foodsRef.addValueEventListener(new ValueEventListener() {
@@ -130,7 +150,7 @@ public class FirstFragment extends Fragment {
                         favoriteFoodsList.add(new FeaturedVerModel(foodID, foodName, foodDes, imageResId, foodPrice, foodRating, foodTiming, foodType));
                     }
                 }
-                featuredVerAdapter = new FeaturedVerAdapter(favoriteFoodsList);
+                featuredVerAdapter = new FeaturedVerAdapter(favoriteFoodsList, getContext());
                 recyclerView2.setAdapter(featuredVerAdapter);
             }
 

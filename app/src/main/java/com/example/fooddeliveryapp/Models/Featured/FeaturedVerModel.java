@@ -13,8 +13,22 @@ public class FeaturedVerModel {
     String type;
     String id;
 
+    boolean isFavorite;
+
     public FeaturedVerModel() {
 
+    }
+
+    public FeaturedVerModel(String id, String name, String description, int image, String price, String rating, String timing, String type, boolean isFavorite) {
+        this.image = image;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.rating = rating;
+        this.price = price;
+        this.timing = timing;
+        this.type = type;
+        this.isFavorite = isFavorite;
     }
 
     public FeaturedVerModel(String id, String name, String description, int image, String price, String rating, String timing, String type) {
@@ -90,5 +104,13 @@ public class FeaturedVerModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }

@@ -85,7 +85,7 @@
                         android:id="@+id/add2favourite"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/baseline_favorite_border_24"
+                        android:src="@drawable/favorite_border"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/bottom_sheet_name"
                         app:layout_constraintBottom_toBottomOf="parent"

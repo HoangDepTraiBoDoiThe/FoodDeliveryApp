@@ -42,8 +42,6 @@ public class DailyMealFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         dailyMealAdapter.notifyDataSetChanged();
 
-        Log.d("DailyMealFragment", "RecyclerView set with " + dailyMealModels.size() + " items.");
-
         return root;
     }
 

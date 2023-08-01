@@ -119,6 +119,7 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
                     String foodRating = null;
                     String foodPrice = null;
                     int imageResId = 0;
+                    boolean isFav = false;
                     if (foodType.equals(typeOfFood)) {
                         // Extract data from the snapshot and create a foods object
                         foodID = foodSnapshot.child("foodID").getValue(String.class);
