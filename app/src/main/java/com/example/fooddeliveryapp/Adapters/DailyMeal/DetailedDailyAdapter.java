@@ -10,8 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.fooddeliveryapp.Adapters.Home.HomeVerAdapter;
-import com.example.fooddeliveryapp.Models.DailyMeal.DailyMealModel;
 import com.example.fooddeliveryapp.Models.DailyMeal.DetailedDailyModel;
 import com.example.fooddeliveryapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,7 +19,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdapter.ViewHolder> {
 
@@ -174,7 +171,7 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
             name = itemView.findViewById(R.id.detailed_name);
             price = itemView.findViewById(R.id.detailed_price);
             description = itemView.findViewById(R.id.detailed_des);
-            rating = itemView.findViewById(R.id.detailed_rating);
+            rating = itemView.findViewById(R.id.order_time);
             timing = itemView.findViewById(R.id.detailed_timing);
         }
     }

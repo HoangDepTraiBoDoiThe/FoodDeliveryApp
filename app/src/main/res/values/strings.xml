@@ -35,4 +35,5 @@
     <string name="min_45">Min - $45</string>
     <string name="dinner">Dinner</string>
     <string name="make_order">Make Order</string>
+    <string name="orders">Orders</string>
 </resources>

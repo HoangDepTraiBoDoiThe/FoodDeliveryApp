@@ -102,7 +102,7 @@ public class FeaturedVerAdapter extends RecyclerView.Adapter<FeaturedVerAdapter.
             isFavorite = itemView.findViewById(R.id.isFavorite_img);
             name = itemView.findViewById(R.id.detailed_name);
             desc = itemView.findViewById(R.id.detailed_des);
-            rating = itemView.findViewById(R.id.detailed_rating);
+            rating = itemView.findViewById(R.id.order_time);
             timing = itemView.findViewById(R.id.detailed_timing);
         }
 
