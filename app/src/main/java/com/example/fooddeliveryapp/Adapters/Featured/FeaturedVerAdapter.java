@@ -31,7 +31,7 @@ public class FeaturedVerAdapter extends RecyclerView.Adapter<FeaturedVerAdapter.
     @Override
     public void onBindViewHolder(@NonNull @NotNull FeaturedVerAdapter.ViewHolder holder, int position) {
 
-        holder.imageView.setImageResource(list.get(position).getImageView());
+        holder.imageView.setImageResource(list.get(position).getImage());
         holder.name.setText(list.get(position).getName());
         holder.rating.setText(list.get(position).getRating());
         holder.timing.setText(list.get(position).getTiming());
