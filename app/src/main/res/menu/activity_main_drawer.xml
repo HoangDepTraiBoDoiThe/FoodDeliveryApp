@@ -17,7 +17,7 @@
                 />
         <item
                 android:id="@+id/nav_favourite"
-                android:icon="@drawable/baseline_favorite_24"
+                android:icon="@drawable/favorite_filled"
                 android:title="@string/favourite"
                 />
 
@@ -25,6 +25,12 @@
                 android:id="@+id/nav_my_cart"
                 android:icon="@drawable/baseline_shopping_cart_24"
                 android:title="@string/my_cart"
+                />
+
+        <item
+                android:id="@+id/nav_order"
+                android:icon="@drawable/baseline_wallet_24"
+                android:title="@string/orders"
                 />
     </group>
 </menu>

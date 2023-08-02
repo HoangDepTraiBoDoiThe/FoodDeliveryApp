@@ -1,0 +1,151 @@
+{
+  "food_items": [
+    {
+      "breakfast": [
+        {
+          "image": "fav1",
+          "type": "breakfast",
+          "name": "Breakfast Item 1",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "05:00am - 09:00am"
+        },
+        {
+          "image": "fav2",
+          "type": "breakfast",
+          "name": "Breakfast Item 2",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "05:00am - 09:00am"
+        },
+        {
+          "image": "fav3",
+          "type": "breakfast",
+          "name": "Breakfast Item 3",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "05:00am - 09:00am"
+        }
+      ],
+      "lunch": [
+        {
+          "image": "fav1",
+          "type": "lunch",
+          "name": "Lunch Item 1",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "10:00am - 01:00pm"
+        },
+        {
+          "image": "fav2",
+          "type": "lunch",
+          "name": "Lunch Item 2",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "10:00am - 01:00pm"
+        },
+        {
+          "image": "fav3",
+          "type": "lunch",
+          "name": "Lunch Item 3",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "10:00am - 01:00pm"
+        }
+      ],
+      "dinner": [
+        {
+          "image": "dinner",
+          "type": "dinner",
+          "name": "Dinner Item 1",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "05:00pm - 09:00pm"
+        },
+        {
+          "image": "dinner",
+          "type": "dinner",
+          "name": "Dinner Item 2",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "05:00pm - 09:00pm"
+        },
+        {
+          "image": "dinner",
+          "type": "dinner",
+          "name": "Dinner Item 3",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "05:00pm - 09:00pm"
+        }
+      ],
+      "sweets": [
+        {
+          "image": "s4",
+          "type": "sweets",
+          "name": "Sweets Item 1",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "05:00am - 09:00pm"
+        },
+        {
+          "image": "s2",
+          "type": "sweets",
+          "name": "Sweets Item 2",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "05:00am - 09:00pm"
+        },
+        {
+          "image": "s3",
+          "type": "sweets",
+          "name": "Sweets Item 3",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "05:00am - 09:00pm"
+        }
+      ],
+      "coffe": [
+        {
+          "image": "coffe",
+          "type": "coffe",
+          "name": "Coffe Item 1",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "05:00am - 09:00pm"
+        },
+        {
+          "image": "coffe",
+          "type": "coffe",
+          "name": "Coffe Item 2",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "05:00am - 09:00pm"
+        },
+        {
+          "image": "coffe",
+          "type": "coffe",
+          "name": "Coffe Item 3",
+          "description": "Description",
+          "rating": "5.0",
+          "price": "40,00",
+          "timing": "05:00am - 09:00pm"
+        }
+      ]
+    }
+  ]
+}

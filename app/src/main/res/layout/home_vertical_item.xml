@@ -65,12 +65,12 @@
                     android:layout_height="55dp"
                     android:src="@drawable/ratingbar_yellow_full"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_bias="0.275"
                     android:layout_marginRight="9dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:id="@+id/imageView3"
-                    app:layout_constraintVertical_bias="0.057"
+                    app:layout_constraintVertical_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/rating"
                     />
 
@@ -88,7 +88,7 @@
                     app:layout_constraintVertical_bias="0.225"
 
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.716"
+                    app:layout_constraintHorizontal_bias="0.742"
                     app:layout_constraintStart_toStartOf="parent"
                     />
 
@@ -101,9 +101,11 @@
                     android:textStyle="bold"
                     android:id="@+id/timing"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView5"
-                    android:layout_marginEnd="100dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView4"
+                    app:layout_constraintHorizontal_bias="0.049"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.955"
                     />
 
             <ImageView
@@ -111,9 +113,9 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/baseline_access_time_filled_24"
                     android:id="@+id/imageView4"
-
+                    android:layout_marginLeft="15dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/timing"
+
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHorizontal_bias="0.47"
