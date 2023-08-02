@@ -1,11 +1,9 @@
 package com.example.fooddeliveryapp.Adapters.Home;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -15,28 +13,22 @@ import com.example.fooddeliveryapp.Models.Home.HomeHorModel;
 import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
 import com.google.firebase.database.*;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHolder> {
 
     UpdateVerticalRec updateVerticalRec;
     Activity activity;
-    ArrayList<HomeHorModel> list;
+    ArrayList<HomeHorModel> homeHorModels;
     boolean check = true;
     boolean select = true;
     int row_index = -1;
 
-    public HomeHorAdapter(UpdateVerticalRec updateVerticalRec, Activity activity, ArrayList<HomeHorModel> list) {
+    public HomeHorAdapter(UpdateVerticalRec updateVerticalRec, Activity activity, ArrayList<HomeHorModel> homeHorModels) {
         this.updateVerticalRec = updateVerticalRec;
         this.activity = activity;
-        this.list = list;
+        this.homeHorModels = homeHorModels;
     }
 
     @NonNull
@@ -49,8 +41,8 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int AdapterPosition = holder.getAdapterPosition();
 
-        holder.imageView.setImageResource(list.get(AdapterPosition).getImage());
-        holder.name.setText(list.get(AdapterPosition).getName());
+        holder.imageView.setImageResource(homeHorModels.get(AdapterPosition).getImage());
+        holder.name.setText(homeHorModels.get(AdapterPosition).getName());
 
         if (check) {
             getDataFromFirebase(AdapterPosition, "pizza");
@@ -64,7 +56,7 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
                 notifyDataSetChanged();
 
                 // Load data for the selected item from Firebase
-                String selectedHorItem = list.get(AdapterPosition).getId();
+                String selectedHorItem = homeHorModels.get(AdapterPosition).getFoodType();
                 getDataFromFirebase(AdapterPosition, selectedHorItem);
             }
         });
@@ -84,7 +76,6 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
         }
     }
 
-
     public void getDataFromFirebase (int position, String typeOfFood)
     {
         DatabaseReference foodsRef = FirebaseDatabase.getInstance().getReference("foods");
@@ -103,9 +94,10 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
                     String foodPrice = null;
                     int imageResId = 0;
                     boolean isFav = false;
+
                     if (foodType.equals(typeOfFood)) {
                         // Extract data from the snapshot and create a foods object
-                        foodID = foodSnapshot.child("foodID").getValue(String.class);
+                        foodID = foodSnapshot.getKey();
                         foodName = foodSnapshot.child("foodName").getValue(String.class);
                         foodDes = foodSnapshot.child("foodDescription").getValue(String.class);
                         foodTiming = foodSnapshot.child("foodTiming").getValue(String.class);
@@ -127,10 +119,9 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
 
     }
 
-
     @Override
     public int getItemCount() {
-        return list.size();
+        return homeHorModels.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -146,48 +137,6 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
             cardView = itemView.findViewById(R.id.cardview);
         }
     }
-
-    private JSONArray GetItemArray(Resources resources, int resourceId) {
-        try {
-
-            InputStream inputStream = resources.openRawResource(resourceId);
-            Scanner scanner = new Scanner(inputStream);
-            StringBuilder jsonString = new StringBuilder();
-            while (scanner.hasNext()) {
-                jsonString.append(scanner.nextLine());
-            }
-            scanner.close();
-            JSONObject jsonObject = new JSONObject(jsonString.toString());
-            JSONArray itemArray = jsonObject.getJSONArray("food_items");
-            return itemArray;
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    // Helper method to load JSON data from raw resource
-    private JSONArray loadJSONFromRaw(Resources resources, int resourceId, String name) {
-
-        try {
-
-            JSONArray itemArray = GetItemArray(resources, resourceId);
-            JSONArray pizzaArray = null;
-            for (int i = 0; i < itemArray.length(); i++) {
-                JSONObject itemObject = itemArray.getJSONObject(i);
-                pizzaArray = itemObject.getJSONArray(name);
-            }
-            return pizzaArray;
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
 
     // Helper method to get resource ID by name
     private int getResourceIdByName(String name) {

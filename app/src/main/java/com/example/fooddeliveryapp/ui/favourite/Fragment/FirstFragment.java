@@ -126,7 +126,7 @@ public class FirstFragment extends Fragment {
 
                 for (DataSnapshot foodSnapshot : dataSnapshot.getChildren()) {
                     String foodType = null;
-                    String foodID = foodSnapshot.child("foodID").getValue(String.class);
+                    String foodID = foodSnapshot.getKey();
                     String foodName = null;
                     String foodDes = null;
                     String foodTiming = null;
@@ -137,7 +137,7 @@ public class FirstFragment extends Fragment {
                     // Check if the foodID exists in the favoriteFoodIDs list
                     if (favoriteFoodIDs.contains(foodID)) {
                         // Extract data from the snapshot and create a foods object
-                        foodID = foodSnapshot.child("foodID").getValue(String.class);
+                        foodID = foodSnapshot.getKey();
                         foodName = foodSnapshot.child("foodName").getValue(String.class);
                         foodDes = foodSnapshot.child("foodDescription").getValue(String.class);
                         foodTiming = foodSnapshot.child("foodTiming").getValue(String.class);

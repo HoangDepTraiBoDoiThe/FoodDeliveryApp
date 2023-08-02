@@ -43,7 +43,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     String paymentMethod = dataSnapshot.child("paymentMethod").getValue(String.class);
                     String shippingAddress = dataSnapshot.child("shippingAddress").getValue(String.class);
 
-                    // Update the TextView elements with the fetched order details
                     TextView totalPriceTextView = findViewById(R.id.total_price);
                     totalPriceTextView.setText(totalPrice);
 
@@ -63,7 +62,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle database errors, if any
+
             }
         });
 
@@ -77,17 +76,19 @@ public class OrderDetailsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<OrderItemModel> orderItemModelList = new ArrayList<>();
                 for (DataSnapshot itemSnapshot : dataSnapshot.getChildren()) {
-                    OrderItemModel orderItem = new OrderItemModel(itemSnapshot.child("foodID").getValue(String.class));
+
+                    String foodId_order = itemSnapshot.child("foodID").getValue(String.class);
+                    int quantity_order = itemSnapshot.child("quantity").getValue(Integer.class);
+                    OrderItemModel orderItem = new OrderItemModel(foodId_order, quantity_order);
                     orderItemModelList.add(orderItem);
                 }
 
-                // Fetch the details of the food items using the foodID from each OrderItemModel
                 fetchFoodItemsDetails(orderItemModelList);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle database errors, if any
+
             }
         });
     }
@@ -99,30 +100,32 @@ public class OrderDetailsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<OrderItemModel> orderItemModels = new ArrayList<>();
                 for (OrderItemModel orderItem : orderItems) {
+
                     String foodID = orderItem.getId();
                     DataSnapshot foodSnapshot = dataSnapshot.child(foodID);
                     if (foodSnapshot.exists()) {
 
                         String foodType = foodSnapshot.child("foodType").getValue(String.class);
-                        foodID = foodSnapshot.child("foodID").getValue(String.class);
+                        foodID = foodSnapshot.getKey();
                         String foodName = foodSnapshot.child("foodName").getValue(String.class);
                         String foodDes = foodSnapshot.child("foodDescription").getValue(String.class);
                         String foodTiming = foodSnapshot.child("foodTiming").getValue(String.class);
                         String foodRating = foodSnapshot.child("foodRatting").getValue(String.class);
-                        String foodPrice = foodSnapshot.child("foodPrice").getValue(Integer.class) + ",00$";
+                        String foodPrice = foodSnapshot.child("foodPrice").getValue(Integer.class) + ".00$";
+                        String orderTotalPrice = order.getTotalPrice() + "0$";
+                        int foodQuantity = orderItem.getQuantity_int();
                         int imageResId = getResourceIdByName(foodSnapshot.child("foodImage").getValue(String.class));
 
-                        orderItemModels.add(new OrderItemModel(foodID, foodName, foodDes, imageResId, foodPrice, foodRating, foodTiming, foodType));
+                        orderItemModels.add(new OrderItemModel(foodID, foodName, foodDes, imageResId, orderTotalPrice, foodPrice, foodRating, foodTiming, foodType, foodQuantity));
                     }
                 }
 
-                // Display the food items in the RecyclerView
                 setupOrderItemsRecyclerView(orderItemModels);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle database errors, if any
+
             }
         });
     }

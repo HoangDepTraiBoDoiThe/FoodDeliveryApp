@@ -25,11 +25,11 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
 
     private BottomSheetDialog bottomSheetDialog;
     Context context;
-    ArrayList<HomeVerModel> list;
+    ArrayList<HomeVerModel> homeVerModels;
 
-    public HomeVerAdapter(Context context, ArrayList<HomeVerModel> list) {
+    public HomeVerAdapter(Context context, ArrayList<HomeVerModel> homeVerModels) {
         this.context = context;
-        this.list = list;
+        this.homeVerModels = homeVerModels;
     }
     @NonNull
     @NotNull
@@ -41,18 +41,18 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull @NotNull HomeVerAdapter.ViewHolder holder, int position) {
 
-        final String mName =  list.get(position).getName();
-        final String mTime =  list.get(position).getTiming();
-        final String mRate =  list.get(position).getRating();
-        final String mPrice =  list.get(position).getPrice();
-        final int mImage =  list.get(position).getImage();
+        final String mName =  homeVerModels.get(position).getName();
+        final String mTime =  homeVerModels.get(position).getTiming();
+        final String mRate =  homeVerModels.get(position).getRating();
+        final String mPrice =  homeVerModels.get(position).getPrice();
+        final int mImage =  homeVerModels.get(position).getImage();
         //final int mIsFavorite =  list.get(position).getImage();
 
-        holder.imageView.setImageResource(list.get(position).getImage());
-        holder.name.setText(list.get(position).getName());
-        holder.price.setText(list.get(position).getPrice());
-        holder.rating.setText(list.get(position).getRating());
-        holder.timing.setText(list.get(position).getTiming());
+        holder.imageView.setImageResource(homeVerModels.get(position).getImage());
+        holder.name.setText(homeVerModels.get(position).getName());
+        holder.price.setText(homeVerModels.get(position).getPrice());
+        holder.rating.setText(homeVerModels.get(position).getRating());
+        holder.timing.setText(homeVerModels.get(position).getTiming());
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,14 +82,14 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
 
 
                 // Fetch the user's favorite list from the server
-                fetchUserFavoritesFromServer(list.get(position).getId(), new OnFetchFavoritesListener() {
+                fetchUserFavoritesFromServer(homeVerModels.get(position).getId(), new OnFetchFavoritesListener() {
                     @Override
                     public void onFavoritesFetched(List<String> favoriteFoodIDs) {
-                        boolean isFavsorite = favoriteFoodIDs.contains(list.get(position).getId());
-                        list.get(position).setFavorite(isFavsorite);
+                        boolean isFavsorite = favoriteFoodIDs.contains(homeVerModels.get(position).getId());
+                        homeVerModels.get(position).setFavorite(isFavsorite);
 
                         // Update the favorite icon based on the isFavorite status of the food
-                        if (list.get(position).isFavorite()) {
+                        if (homeVerModels.get(position).isFavorite()) {
 
                             isFavoriteFood.setImageResource(R.drawable.favorite_filled);
                         } else {
@@ -97,23 +97,20 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
                         }
                     }
                 });
+
                 isFavoriteFood.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // Toggle the isFavorite status of the food
-                        boolean isFavorite = list.get(position).isFavorite();
-                        list.get(position).setFavorite(!isFavorite);
+                        boolean isFavorite = homeVerModels.get(position).isFavorite();
+                        homeVerModels.get(position).setFavorite(!isFavorite);
 
-                        // Update the favorite icon based on the updated isFavorite status
-                        if (list.get(position).isFavorite()) {
+                        if (homeVerModels.get(position).isFavorite()) {
                             isFavoriteFood.setImageResource(R.drawable.favorite_filled);
-                            // Add the foodID to the user's favorite list in the database
-                            addToFavorite(list.get(position).getId());
+                            addToFavorite(homeVerModels.get(position).getId());
                         }
                         else {
                             isFavoriteFood.setImageResource(R.drawable.favorite_border);
-                            // Remove the foodID from the user's favorite list in the database
-                            removeFromFavorite(list.get(position).getId());
+                            removeFromFavorite(homeVerModels.get(position).getId());
                         }
                     }
                 });
@@ -198,7 +195,7 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return homeVerModels.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -36,8 +36,10 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
         holder.imageView.setImageResource(orderItemsList.get(position).getImage());
         holder.name.setText(orderItemsList.get(position).getName());
         holder.price.setText(orderItemsList.get(position).getPrice());
+        holder.totalPrice.setText(orderItemsList.get(position).getTotalPrice());
         holder.rating.setText(orderItemsList.get(position).getRating());
         holder.timing.setText(orderItemsList.get(position).getTiming());
+        holder.quantity.setText(orderItemsList.get(position).getQuantity() + "x");
     }
 
     @Override
@@ -48,7 +50,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView name, timing, rating, price;
+        TextView name, timing, rating, price, totalPrice, quantity;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -57,7 +59,9 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
             name = itemView.findViewById(R.id.order_name);
             timing = itemView.findViewById(R.id.order_timing);
             rating = itemView.findViewById(R.id.order_ratting);
-            price = itemView.findViewById(R.id.order_price);
+            price = itemView.findViewById(R.id.foodPrice_order);
+            totalPrice = itemView.findViewById(R.id.order_total_price);
+            quantity = itemView.findViewById(R.id.order_quantity);
         }
     }
 }

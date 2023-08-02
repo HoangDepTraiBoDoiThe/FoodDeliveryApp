@@ -62,7 +62,7 @@ public class DetailedDailyMealActivity extends AppCompatActivity {
                     int imageResId = 0;
                     if (foodType.equals(typeOfFood)) {
                         // Extract data from the snapshot and create a foods object
-                        foodID = foodSnapshot.child("foodID").getValue(String.class);
+                        foodID = foodSnapshot.getKey();
                         foodName = foodSnapshot.child("foodName").getValue(String.class);
                         foodDes = foodSnapshot.child("foodDescription").getValue(String.class);
                         foodTiming = foodSnapshot.child("foodTiming").getValue(String.class);

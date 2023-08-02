@@ -13,6 +13,7 @@ import com.example.fooddeliveryapp.Activities.OrderDetailsActivity;
 import com.example.fooddeliveryapp.Adapters.Order.OrderAdapter;
 import com.example.fooddeliveryapp.Models.Order.OrderModel;
 import com.example.fooddeliveryapp.R;
+import com.google.common.util.concurrent.AtomicDouble;
 import com.google.firebase.database.*;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class OrderFragment extends Fragment {
                 orderList.clear();
 
                 for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
-                    String orderID = orderSnapshot.child("orderID").getValue(String.class);
+                    String orderID = orderSnapshot.getKey();
                     String orderStatus = orderSnapshot.child("status").getValue(String.class);
                     String orderDate = orderSnapshot.child("orderDate").getValue(String.class);
                     String orderAddress = orderSnapshot.child("shippingAddress").getValue(String.class);
@@ -90,7 +91,6 @@ public class OrderFragment extends Fragment {
             }
         });
     }
-
     private void fetchOrderItemsFromFirebase(OrderModel order) {
         DatabaseReference orderItemsRef = FirebaseDatabase.getInstance().getReference("orderItems");
         Query query = orderItemsRef.orderByChild("orderID").equalTo(order.getOrderID());
@@ -98,46 +98,30 @@ public class OrderFragment extends Fragment {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Initialize a list to keep track of processed orders
-                ArrayList<String> processedOrders = new ArrayList<>();
+                AtomicDouble totalPrice = new AtomicDouble(0.0);
 
                 for (DataSnapshot itemSnapshot : dataSnapshot.getChildren()) {
                     String foodID = itemSnapshot.child("foodID").getValue(String.class);
                     int quantity = itemSnapshot.child("quantity").getValue(Integer.class);
 
-                    // Fetch the corresponding FoodItemModel using the foodID
                     DatabaseReference foodItemsRef = FirebaseDatabase.getInstance().getReference("foods").child(foodID);
                     foodItemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot foodSnapshot) {
-                            double totalPrice = 0.0;
-
                             if (foodSnapshot.exists()) {
                                 double foodPrice = foodSnapshot.child("foodPrice").getValue(Double.class);
-                                totalPrice += (foodPrice * quantity);
+                                totalPrice.addAndGet(foodPrice * quantity);
 
-                                // Add the order to the processed list to avoid duplicates
-                                processedOrders.add(order.getOrderID());
+                                order.setTotalPrice(String.valueOf(totalPrice.get()));
 
-                                // If all order items for this order have been processed, update the order and notify the adapter
-                                if (processedOrders.size() == dataSnapshot.getChildrenCount()) {
-                                    // Update the order with the calculated total price
-                                    order.setTotalPrice(String.valueOf(totalPrice));
-
-                                    // If the order is not already in the list, add it
-                                    if (!orderList.contains(order)) {
-                                        orderList.add(order);
-                                    }
-
-                                    // Notify the adapter that the data has changed
-                                    orderAdapter.notifyDataSetChanged();
-                                }
+                                // Add the order to the list
+                                handleOrder(order);
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                            // Handle database errors, if any
+
                         }
                     });
                 }
@@ -149,6 +133,16 @@ public class OrderFragment extends Fragment {
             }
         });
     }
+
+    private void handleOrder(OrderModel order) {
+        // Check if the order is not already in the list, then add it
+        if (!orderList.contains(order)) {
+            orderList.add(order);
+        }
+
+        orderAdapter.notifyDataSetChanged();
+    }
+
 
 }
 

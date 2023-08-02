@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment implements UpdateVerticalRec {
 
         homeVerAdapter = new HomeVerAdapter(getActivity(), homeVerModelList);
         homeVerticalRec = root.findViewById(R.id.home_ver_rec);
-        homeVerticalRec.setAdapter(homeVerAdapter);
+        homeVerticalRec.setAdapter(homeVerAdapter); // Làm màu
         homeVerticalRec.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
 
         return root;
