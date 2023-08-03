@@ -35,9 +35,9 @@ public class FavouriteFragment extends Fragment {
         fragmentAdapter = new FragmentAdapter(fm, getLifecycle());
 
         viewPager2.setAdapter(fragmentAdapter);
-        tabLayout.addTab(tabLayout.newTab().setText("Featured"));
+        tabLayout.addTab(tabLayout.newTab().setText("Favorite"));
         tabLayout.addTab(tabLayout.newTab().setText("Popular"));
-        tabLayout.addTab(tabLayout.newTab().setText("New"));
+        //tabLayout.addTab(tabLayout.newTab().setText("New"));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

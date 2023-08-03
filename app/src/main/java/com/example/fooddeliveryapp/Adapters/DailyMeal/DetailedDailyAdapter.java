@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.fooddeliveryapp.Models.DailyMeal.DetailedDailyModel;
+import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,12 +22,12 @@ import java.util.List;
 
 public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdapter.ViewHolder> {
 
-    List<DetailedDailyModel> detailedDailyModels;
+    List<HomeVerModel> homeVerModels;
 
     Context context;
 
-    public DetailedDailyAdapter(List<DetailedDailyModel> detailedDailyModels, Context context) {
-        this.detailedDailyModels = detailedDailyModels;
+    public DetailedDailyAdapter(List<HomeVerModel> homeVerModels, Context context) {
+        this.homeVerModels = homeVerModels;
         this.context = context;
     }
 
@@ -40,23 +40,23 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull DetailedDailyAdapter.ViewHolder holder, int position) {
-        DetailedDailyModel detailedDailyModel = detailedDailyModels.get(position);
+        HomeVerModel homeVerModel = homeVerModels.get(position);
 
-        holder.imageView.setImageResource(detailedDailyModel.getImage());
-        holder.name.setText(detailedDailyModel.getName());
-        holder.price.setText(detailedDailyModel.getPrice());
-        holder.description.setText(detailedDailyModel.getDescription());
-        holder.rating.setText(detailedDailyModel.getRating());
-        holder.timing.setText(detailedDailyModel.getTiming());
+        holder.imageView.setImageResource(homeVerModel.getImage());
+        holder.name.setText(homeVerModel.getName());
+        holder.price.setText(homeVerModel.getPrice());
+        holder.description.setText(homeVerModel.getDescription());
+        holder.rating.setText(homeVerModel.getRating());
+        holder.timing.setText(homeVerModel.getTiming());
 
-        fetchUserFavoritesFromServer(detailedDailyModels.get(position).getId(), new DetailedDailyAdapter.OnFetchFavoritesListener() {
+        fetchUserFavoritesFromServer(homeVerModels.get(position).getId(), new DetailedDailyAdapter.OnFetchFavoritesListener() {
             @Override
             public void onFavoritesFetched(List<String> favoriteFoodIDs) {
-                boolean isFavsorite = favoriteFoodIDs.contains(detailedDailyModels.get(position).getId());
-                detailedDailyModels.get(position).setFavorite(isFavsorite);
+                boolean isFavsorite = favoriteFoodIDs.contains(homeVerModels.get(position).getId());
+                homeVerModels.get(position).setFavorite(isFavsorite);
 
                 // Update the favorite icon based on the isFavorite status of the food
-                if (detailedDailyModel.isFavorite()) {
+                if (homeVerModel.isFavorite()) {
                     holder.add2Favorite.setImageResource(R.drawable.favorite_filled);
                 } else {
                     holder.add2Favorite.setImageResource(R.drawable.favorite_border);
@@ -64,24 +64,22 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
             }
         });
 
-
-
         holder.add2Favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Toggle the isFavorite status of the food
-                boolean isFavorite = detailedDailyModel.isFavorite();
-                detailedDailyModel.setFavorite(!isFavorite);
+                boolean isFavorite = homeVerModel.isFavorite();
+                homeVerModel.setFavorite(!isFavorite);
 
                 // Update the favorite icon based on the updated isFavorite status
-                if (detailedDailyModel.isFavorite()) {
+                if (homeVerModel.isFavorite()) {
                     holder.add2Favorite.setImageResource(R.drawable.favorite_filled);
                     // Add the foodID to the user's favorite list in the database
-                    addToFavorite(detailedDailyModel.getId());
+                    addToFavorite(homeVerModel.getId());
                 } else {
                     holder.add2Favorite.setImageResource(R.drawable.favorite_border);
                     // Remove the foodID from the user's favorite list in the database
-                    removeFromFavorite(detailedDailyModel.getId());
+                    removeFromFavorite(homeVerModel.getId());
                 }
             }
         });
@@ -155,7 +153,7 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
 
     @Override
     public int getItemCount() {
-        return detailedDailyModels.size();
+        return homeVerModels.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

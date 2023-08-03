@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context=".ui.Home.SearchResultsFragment"
+              android:orientation="vertical"
+        >
+
+    <EditText
+            android:id="@+id/searchEditText"
+            android:background="@drawable/search_gb"
+            android:layout_margin="6dp"
+            android:padding="10dp"
+            android:drawablePadding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:hint="Search your food"
+            android:fontFamily="@font/amita"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:drawableLeft="@drawable/baseline_search_24"
+            android:layout_marginBottom="5dp"
+            />
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchResultsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/home_vertical_item"
+            tools:layout_editor_absoluteY="-357dp"
+            tools:layout_editor_absoluteX="16dp"
+            />
+</LinearLayout>
+
+

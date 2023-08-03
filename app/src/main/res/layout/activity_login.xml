@@ -76,7 +76,7 @@
             android:layout_marginTop="10dp"
             android:drawablePadding="10dp"
             android:backgroundTint="#CCCCCC"
-            android:id="@+id/editText3"
+            android:id="@+id/searchEditText"
             />
 
     <Button
@@ -93,7 +93,7 @@
             android:onClick="Register"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.25"
-            app:layout_constraintTop_toBottomOf="@+id/editText3"
+            app:layout_constraintTop_toBottomOf="@+id/searchEditText"
             />
 
     <TextView

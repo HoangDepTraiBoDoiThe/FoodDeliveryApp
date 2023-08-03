@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.fooddeliveryapp.Adapters.Order.OrderItemAdapter;
-import com.example.fooddeliveryapp.Models.DailyMeal.DetailedDailyModel;
 import com.example.fooddeliveryapp.Models.Order.OrderItemModel;
 import com.example.fooddeliveryapp.Models.Order.OrderModel;
 import com.example.fooddeliveryapp.R;

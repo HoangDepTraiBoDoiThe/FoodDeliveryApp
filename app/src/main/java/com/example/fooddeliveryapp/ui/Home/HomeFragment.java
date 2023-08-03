@@ -1,16 +1,17 @@
 package com.example.fooddeliveryapp.ui.Home;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
+import com.example.fooddeliveryapp.Activities.HomePage.FoodSearchResultActivity;
 import com.example.fooddeliveryapp.Adapters.Home.HomeHorAdapter;
 import com.example.fooddeliveryapp.Adapters.Home.HomeVerAdapter;
 import com.example.fooddeliveryapp.Adapters.Home.UpdateVerticalRec;
@@ -31,34 +32,42 @@ public class HomeFragment extends Fragment implements UpdateVerticalRec {
     ArrayList<HomeHorModel> homeHorModelList;
     HomeHorAdapter homeHorAdapter;
 
+    ViewPager2 foodSrearchView;
 
     //////////// Vertical
     ArrayList<HomeVerModel> homeVerModelList;
     HomeVerAdapter homeVerAdapter;
-    EditText searchEditText;
+    TextView searchEditText;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        searchEditText = root.findViewById(R.id.editText3);
-        searchEditText.addTextChangedListener(new TextWatcher() {
+        searchEditText = root.findViewById(R.id.searchEditText);
+        foodSrearchView = root.findViewById(R.id.view_paper2);
+        searchEditText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                // Perform search operation based on charSequence (user input)
-                String searchQuery = charSequence.toString();
-                performSearch(searchQuery);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String searchQuery = editable.toString();
-                performSearch(searchQuery);
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), FoodSearchResultActivity.class);
+                getContext().startActivity(intent);
             }
         });
+//        searchEditText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                // Perform search operation based on charSequence (user input)
+//                String searchQuery = charSequence.toString();
+//                performSearch(searchQuery);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
 
     ////// Horizontal
         homeHorModelList = new ArrayList<>();
@@ -87,24 +96,41 @@ public class HomeFragment extends Fragment implements UpdateVerticalRec {
 
     // Method to show the search results in a new fragment or dialog
     private void showSearchResultsFragment(ArrayList<HomeVerModel> searchResults) {
-        // Create and show a new fragment or dialog to display search results
-        CallBack(0, searchResults);
+
+        Intent intent = new Intent(getContext(), FoodSearchResultActivity.class);
+       // intent.putExtra("searchResults", searchResults);
+        getContext().startActivity(intent);
+
     }
 
     public void performSearch (String searchQuery)
     {
+//        DatabaseReference foodsRef = FirebaseDatabase.getInstance().getReference("foods");
+//        foodsRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+//                ArrayList<HomeVerModel> homeVerModels = new ArrayList<>();
+//                for (DataSnapshot foodItem : snapshot.getChildren()) {
+//                    String foodName = foodItem.child("foodName").getValue(String.class);
+//                    if (searchQuery.equals(foodName)) {
+//                        homeVerModels.add(getFoodItemDataFromFirebase(foodItem));
+//                    }
+//                }
+//                showSearchResultsFragment(homeVerModels);
+//            }
         DatabaseReference foodsRef = FirebaseDatabase.getInstance().getReference("foods");
-        foodsRef.addValueEventListener(new ValueEventListener() {
+        Query query = foodsRef.orderByChild("foodType").startAt(searchQuery).endAt(searchQuery + "\uf8ff"); //[chQuery).endAt(searchQuery + "\uf8ff");]
+
+        query.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<HomeVerModel> homeVerModels = new ArrayList<>();
-                for (DataSnapshot foodItem : snapshot.getChildren()) {
-                    String foodName = foodItem.child("foodName").getValue(String.class);
-                    if (searchQuery.equals(foodName)) {
-                        homeVerModels.add(getFoodItemDataFromFirebase(foodItem));
-                    }
+                for (DataSnapshot foodItem : dataSnapshot.getChildren()) {
+                    // ... Extract data and create HomeVerModel instances
+                    homeVerModels.add(getFoodItemDataFromFirebase(foodItem));
                 }
                 showSearchResultsFragment(homeVerModels);
+                //CallBack(0, homeVerModels);
             }
 
             @Override

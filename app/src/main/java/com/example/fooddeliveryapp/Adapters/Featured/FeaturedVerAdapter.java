@@ -9,7 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.fooddeliveryapp.Models.Featured.FeaturedVerModel;
+import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,10 +21,10 @@ import java.util.List;
 
 public class FeaturedVerAdapter extends RecyclerView.Adapter<FeaturedVerAdapter.ViewHolder> {
 
-    List<FeaturedVerModel> list;
+    List<HomeVerModel> list;
     Context context;
 
-    public FeaturedVerAdapter(List<FeaturedVerModel> list, Context context) {
+    public FeaturedVerAdapter(List<HomeVerModel> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -38,12 +38,12 @@ public class FeaturedVerAdapter extends RecyclerView.Adapter<FeaturedVerAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull FeaturedVerAdapter.ViewHolder holder, int position) {
-        FeaturedVerModel featuredVerModel = list.get(position);
+        HomeVerModel homeVerModel = list.get(position);
 
-        holder.imageView.setImageResource(featuredVerModel.getImage());
-        holder.name.setText(featuredVerModel.getName());
-        holder.rating.setText(featuredVerModel.getRating());
-        holder.timing.setText(featuredVerModel.getTiming());
+        holder.imageView.setImageResource(homeVerModel.getImage());
+        holder.name.setText(homeVerModel.getName());
+        holder.rating.setText(homeVerModel.getRating());
+        holder.timing.setText(homeVerModel.getTiming());
         holder.isFavorite.setImageResource(R.drawable.favorite_filled);
 
         holder.isFavorite.setOnClickListener(new View.OnClickListener() {

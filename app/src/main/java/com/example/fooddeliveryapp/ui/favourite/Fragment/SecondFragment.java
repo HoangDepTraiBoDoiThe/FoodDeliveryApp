@@ -1,63 +1,89 @@
 package com.example.fooddeliveryapp.ui.favourite.Fragment;
 
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.fooddeliveryapp.Adapters.Home.HomeVerAdapter;
+import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
+import com.google.firebase.database.*;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SecondFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 public class SecondFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private RecyclerView sortedRecyclerView;
+    private HomeVerAdapter sortedAdapter;
+    ArrayList<HomeVerModel> homeVerModelList;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public SecondFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SecondFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SecondFragment newInstance(String param1, String param2) {
-        SecondFragment fragment = new SecondFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_second, container, false);
+
+        sortedRecyclerView = rootView.findViewById(R.id.sortedRecyclerView);
+        sortedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        homeVerModelList = new ArrayList<>();
+        getDataFromFirebase();
+
+        sortedAdapter = new HomeVerAdapter(getContext(), homeVerModelList);
+        sortedRecyclerView.setAdapter(sortedAdapter);
+
+        return rootView;
+    }
+
+    public void getDataFromFirebase() {
+        DatabaseReference foodsRef = FirebaseDatabase.getInstance().getReference("foods");
+        foodsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                homeVerModelList.clear();
+                for (DataSnapshot foodSnapshot : dataSnapshot.getChildren()) {
+                    homeVerModelList.add(getFoodItemDataFromFirebase(foodSnapshot));
+                }
+                Collections.sort(homeVerModelList, new Comparator<HomeVerModel>() {
+                    @Override
+                    public int compare(HomeVerModel model1, HomeVerModel model2) {
+                        return Double.compare(Double.parseDouble(model2.getRating()), Double.parseDouble(model1.getRating()));
+                    }
+                });
+                sortedAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle onCancelled
+            }
+        });
+    }
+
+    // Helper method
+    public HomeVerModel getFoodItemDataFromFirebase(DataSnapshot foodItem) {
+        String foodID = foodItem.getKey();
+        String foodName = foodItem.child("foodName").getValue(String.class);
+        String foodType = foodItem.child("foodType").getValue(String.class);
+        String foodDes = foodItem.child("foodDescription").getValue(String.class);
+        String foodTiming = foodItem.child("foodTiming").getValue(String.class);
+        String foodRating = foodItem.child("foodRatting").getValue(String.class);
+        String foodPrice = foodItem.child("foodPrice").getValue(Integer.class) + ",00$";
+        int imageResId = getResourceIdByName(foodItem.child("foodImage").getValue(String.class));
+
+        HomeVerModel homeVerModels = new HomeVerModel(foodID, foodName, foodDes, imageResId, foodPrice, foodRating, foodTiming, foodType);
+
+        return homeVerModels;
+    }
+
+    // Helper method to get resource ID by name
+    private int getResourceIdByName(String name) {
+        return getResources().getIdentifier(name, "drawable", getContext().getPackageName());
     }
 }

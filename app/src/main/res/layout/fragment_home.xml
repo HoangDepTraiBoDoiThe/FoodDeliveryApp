@@ -18,8 +18,9 @@
             android:id="@+id/constraintLayout"
             >
 
-        <EditText
-                android:id="@+id/editText3"
+
+        <TextView
+                android:id="@+id/searchEditText"
                 android:background="@drawable/search_gb"
                 android:layout_margin="6dp"
                 android:padding="10dp"
@@ -37,15 +38,18 @@
 
                 />
 
+
+
+
         <ImageView
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:background="@drawable/search_gb"
                 android:padding="10dp"
                 android:src="@drawable/baseline_person_24"
-                app:layout_constraintBottom_toBottomOf="@+id/editText3"
+                app:layout_constraintBottom_toBottomOf="@+id/searchEditText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/editText3"
+                app:layout_constraintStart_toEndOf="@+id/searchEditText"
                 />
 
         <TextView
@@ -56,7 +60,7 @@
                 android:textColor="@color/white"
                 android:textSize="35sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText3"
+                app:layout_constraintTop_toBottomOf="@+id/searchEditText"
                 android:id="@+id/textView4"
                 />
 

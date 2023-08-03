@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import com.example.fooddeliveryapp.ui.Home.SearchResultsFragment;
 import org.jetbrains.annotations.NotNull;
 
 public class FragmentAdapter extends FragmentStateAdapter {
@@ -20,8 +21,6 @@ public class FragmentAdapter extends FragmentStateAdapter {
         switch (position) {
             case 1:
                 return new SecondFragment();
-            case 2:
-                return new ThirdFragment();
         }
 
         return new FirstFragment();
