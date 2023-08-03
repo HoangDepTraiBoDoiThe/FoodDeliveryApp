@@ -5,9 +5,20 @@ import java.io.Serializable;
 public class OrderModel implements Serializable {
 
     String orderID, orderStatus, orderDate, orderAddress, paymentMethod, userID, totalPrice;
+    int orderStatusImage;
 
     public OrderModel(String orderID) {
         this.orderID = orderID;
+    }
+
+    public OrderModel(String orderID, String orderStatus, String orderDate, String orderAddress, String paymentMethod, String userID, int orderStatusImage) {
+        this.orderID = orderID;
+        this.orderStatus = orderStatus;
+        this.orderDate = orderDate;
+        this.orderAddress = orderAddress;
+        this.paymentMethod = paymentMethod;
+        this.userID = userID;
+        this.orderStatusImage = orderStatusImage;
     }
 
     public OrderModel(String orderID, String orderStatus, String orderDate, String orderAddress, String paymentMethod, String userID) {
@@ -86,5 +97,13 @@ public class OrderModel implements Serializable {
     }
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = String.valueOf(totalPrice);
+    }
+
+    public int getOrderStatusImage() {
+        return orderStatusImage;
+    }
+
+    public void setOrderStatusImage(int orderStatusImage) {
+        this.orderStatusImage = orderStatusImage;
     }
 }

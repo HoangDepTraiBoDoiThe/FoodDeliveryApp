@@ -3,6 +3,7 @@ package com.example.fooddeliveryapp.Activities.HomePage;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import com.example.fooddeliveryapp.Adapters.Home.HomeVerAdapter;
 import com.example.fooddeliveryapp.Adapters.Home.SearchResultsAdapter;
 import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,15 +28,38 @@ public class FoodSearchResultActivity extends AppCompatActivity {
 
     HomeVerAdapter homeVerAdapter;
 
+    private FloatingActionButton backToTopButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_search_result);
 
+        backToTopButton = findViewById(R.id.backToTopButton);
+
         searchBox = findViewById(R.id.searchEditText);
         searchBox.requestFocus();
 
         searchRecycleView = findViewById(R.id.searchResultsRecyclerView);
+        searchRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && backToTopButton.getVisibility() != View.VISIBLE) {
+                    backToTopButton.show();
+                } else if (dy < 0 && backToTopButton.getVisibility() == View.VISIBLE) {
+                    backToTopButton.hide();
+                }
+            }
+        });
+
+        backToTopButton.hide();
+        backToTopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Scroll RecyclerView to top
+                searchRecycleView.smoothScrollToPosition(0);
+            }
+        });
 
         searchRecycleView.setLayoutManager(new LinearLayoutManager(this));
 
