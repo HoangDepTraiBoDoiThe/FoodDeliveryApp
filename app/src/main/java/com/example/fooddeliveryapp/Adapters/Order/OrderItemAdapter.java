@@ -13,7 +13,6 @@ import com.example.fooddeliveryapp.R;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.ViewHolder> {
 
@@ -39,7 +38,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
         holder.totalPrice.setText(orderItemsList.get(position).getTotalPrice());
         holder.rating.setText(orderItemsList.get(position).getRating());
         holder.timing.setText(orderItemsList.get(position).getTiming());
-        holder.quantity.setText(orderItemsList.get(position).getQuantity() + "x");
+        holder.quantity.setText(orderItemsList.get(position).getQuantityText() + "x");
     }
 
     @Override

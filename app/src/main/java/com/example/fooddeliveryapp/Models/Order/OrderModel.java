@@ -1,19 +1,21 @@
 package com.example.fooddeliveryapp.Models.Order;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 
 public class OrderModel implements Serializable {
 
-    String orderID, orderStatus, orderDate, orderAddress, paymentMethod, userID, totalPrice;
+    String orderID, status, orderDate, orderAddress, paymentMethod, userID, totalPrice;
     int orderStatusImage;
 
     public OrderModel(String orderID) {
         this.orderID = orderID;
     }
 
-    public OrderModel(String orderID, String orderStatus, String orderDate, String orderAddress, String paymentMethod, String userID, int orderStatusImage) {
+    public OrderModel(String orderID, String status, String orderDate, String orderAddress, String paymentMethod, String userID, int orderStatusImage) {
         this.orderID = orderID;
-        this.orderStatus = orderStatus;
+        this.status = status;
         this.orderDate = orderDate;
         this.orderAddress = orderAddress;
         this.paymentMethod = paymentMethod;
@@ -21,25 +23,25 @@ public class OrderModel implements Serializable {
         this.orderStatusImage = orderStatusImage;
     }
 
-    public OrderModel(String orderID, String orderStatus, String orderDate, String orderAddress, String paymentMethod, String userID) {
+    public OrderModel(String orderID, String status, String orderDate, String orderAddress, String paymentMethod, String userID) {
         this.orderID = orderID;
-        this.orderStatus = orderStatus;
+        this.status = status;
         this.orderDate = orderDate;
         this.orderAddress = orderAddress;
         this.paymentMethod = paymentMethod;
         this.userID = userID;
     }
 
-    public OrderModel(String orderID, String orderStatus, String orderDate, String orderAddress, String paymentMethod, String userID, String totalPrice) {
+    public OrderModel(String orderID, String status, String orderDate, String orderAddress, String paymentMethod, String userID, String totalPrice) {
         this.orderID = orderID;
-        this.orderStatus = orderStatus;
+        this.status = status;
         this.orderDate = orderDate;
         this.orderAddress = orderAddress;
         this.paymentMethod = paymentMethod;
         this.userID = userID;
         this.totalPrice = totalPrice;
     }
-
+    @Exclude
     public String getOrderID() {
         return orderID;
     }
@@ -48,12 +50,12 @@ public class OrderModel implements Serializable {
         this.orderID = orderID;
     }
 
-    public String getOrderStatus() {
-        return orderStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getOrderDate() {
@@ -87,7 +89,7 @@ public class OrderModel implements Serializable {
     public void setUserID(String userID) {
         this.userID = userID;
     }
-
+    @Exclude
     public String getTotalPrice() {
         return totalPrice;
     }
@@ -98,7 +100,7 @@ public class OrderModel implements Serializable {
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = String.valueOf(totalPrice);
     }
-
+    @Exclude
     public int getOrderStatusImage() {
         return orderStatusImage;
     }

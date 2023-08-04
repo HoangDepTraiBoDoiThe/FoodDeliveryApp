@@ -13,7 +13,6 @@ import com.example.fooddeliveryapp.R;
 import com.google.firebase.database.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class OrderDetailsActivity extends AppCompatActivity {
 
@@ -100,7 +99,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 ArrayList<OrderItemModel> orderItemModels = new ArrayList<>();
                 for (OrderItemModel orderItem : orderItems) {
 
-                    String foodID = orderItem.getId();
+                    String foodID = orderItem.getFoodID();
                     DataSnapshot foodSnapshot = dataSnapshot.child(foodID);
                     if (foodSnapshot.exists()) {
 
@@ -112,7 +111,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         String foodRating = foodSnapshot.child("foodRatting").getValue(String.class);
                         String foodPrice = foodSnapshot.child("foodPrice").getValue(Integer.class) + ".00$";
                         String orderTotalPrice = order.getTotalPrice() + "0$";
-                        int foodQuantity = orderItem.getQuantity_int();
+                        int foodQuantity = orderItem.getQuantity();
                         int imageResId = getResourceIdByName(foodSnapshot.child("foodImage").getValue(String.class));
 
                         orderItemModels.add(new OrderItemModel(foodID, foodName, foodDes, imageResId, orderTotalPrice, foodPrice, foodRating, foodTiming, foodType, foodQuantity));

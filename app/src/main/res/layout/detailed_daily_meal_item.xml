@@ -149,6 +149,7 @@
                         />
 
                 <Button
+                        android:id="@+id/add2cart"
                         android:layout_width="97dp"
                         android:layout_height="wrap_content"
                         android:text="Add to cart"

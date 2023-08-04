@@ -104,7 +104,7 @@ public class FirstFragment extends Fragment {
                     String foodDes = null;
                     String foodTiming = null;
                     String foodRating = null;
-                    String foodPrice = null;
+                    double foodPrice = 0.0;
                     int imageResId = 0;
 
                     if (favoriteFoodIDs.contains(foodID)) {
@@ -114,7 +114,7 @@ public class FirstFragment extends Fragment {
                         foodDes = foodSnapshot.child("foodDescription").getValue(String.class);
                         foodTiming = foodSnapshot.child("foodTiming").getValue(String.class);
                         foodRating = foodSnapshot.child("foodRatting").getValue(String.class);
-                        foodPrice = String.valueOf(foodSnapshot.child("foodPrice").getValue(Integer.class)) + ",00$";
+                        foodPrice = foodSnapshot.child("foodPrice").getValue(double.class);
                         imageResId = getResourceIdByName(foodSnapshot.child("foodImage").getValue(String.class));
                         foodType = foodSnapshot.child("foodType").getValue(String.class);
 

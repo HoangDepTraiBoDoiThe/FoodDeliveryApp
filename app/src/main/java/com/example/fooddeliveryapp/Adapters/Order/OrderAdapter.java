@@ -44,7 +44,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         OrderModel order = orderList.get(position);
-        holder.orderStatus.setText(order.getOrderStatus());
+        holder.orderStatus.setText(order.getStatus());
         holder.orderDate.setText(order.getOrderDate());
         holder.orderPrice.setText(order.getTotalPrice());
         holder.orderStatusImage.setImageResource(order.getOrderStatusImage());

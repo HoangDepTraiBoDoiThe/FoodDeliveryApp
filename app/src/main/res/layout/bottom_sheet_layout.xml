@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
                                                    android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
+                                                   android:layout_height="500dp"
                                                    android:id="@+id/bottom_sheet"
                                                    android:background="@drawable/bottom_sheet_bg"
 
@@ -33,6 +33,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintVertical_bias="0.01"
+            />
+
+    <View
+            android:id="@+id/viewbottom"
+            android:layout_width="90dp"
+            android:layout_height="3dp"
+            android:background="@color/purple_500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintVertical_bias="0.964"
             />
 
     <LinearLayout

@@ -61,8 +61,9 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             />
 
-                    <CheckBox
-                            android:id="@+id/add2favourite"
+                    <ImageView
+                            android:id="@+id/cartItemDelete"
+                            android:src="@drawable/baseline_delete_24"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             app:layout_constraintEnd_toEndOf="parent"

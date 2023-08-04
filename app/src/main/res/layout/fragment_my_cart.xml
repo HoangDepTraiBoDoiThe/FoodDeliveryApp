@@ -6,6 +6,8 @@
                                                    android:layout_height="match_parent"
                                                    tools:context=".ui.Cart.CartFragment"
                                                    android:padding="10dp"
+                                                   app:navGraph="@navigation/mobile_navigation"
+
         >
 
     <TextView
@@ -69,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/amita"
                 android:text="Total"
+                android:textColor="@color/black"
                 android:textSize="19sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,10 +82,11 @@
                 />
 
         <TextView
+                android:id="@+id/cartTotalPrice_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/amita"
-                android:text="$180"
+                android:text="$00.00"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -105,10 +109,7 @@
             app:layout_constraintWidth_percent=".8"
             android:id="@+id/btnMakeOrder"
             android:background="@drawable/btn_gb_design"
-
-            android:onClick="MakeOrder"
             app:layout_constraintVertical_bias="0.851"
-
             app:layout_constraintBottom_toBottomOf="parent"
             />
 

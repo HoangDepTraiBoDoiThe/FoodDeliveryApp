@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.fooddeliveryapp.Models.Cart.CartModel;
 import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdapter.ViewHolder> {
 
@@ -44,10 +47,16 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
 
         holder.imageView.setImageResource(homeVerModel.getImage());
         holder.name.setText(homeVerModel.getName());
-        holder.price.setText(homeVerModel.getPrice());
+        holder.price.setText(String.format(Locale.getDefault(), "%.2f", homeVerModel.getPrice()));
         holder.description.setText(homeVerModel.getDescription());
         holder.rating.setText(homeVerModel.getRating());
         holder.timing.setText(homeVerModel.getTiming());
+        holder.add2Cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToCart(homeVerModels.get(position).getId());
+            }
+        });
 
         fetchUserFavoritesFromServer(homeVerModels.get(position).getId(), new DetailedDailyAdapter.OnFetchFavoritesListener() {
             @Override
@@ -81,6 +90,58 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
                     // Remove the foodID from the user's favorite list in the database
                     removeFromFavorite(homeVerModel.getId());
                 }
+            }
+        });
+    }
+    private void addToCart(String foodID) {
+        DatabaseReference cartItemsRef = FirebaseDatabase.getInstance().getReference("cartItems");
+
+        // Check if the food item already exists in the user's cart
+        String cartID = hardcodedUserID;
+        cartItemsRef.orderByChild("foodID").equalTo(foodID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Food item already exists in the cart, update its quantity
+                    for (DataSnapshot cartItemSnapshot : dataSnapshot.getChildren()) {
+                        String existingCartItemID = cartItemSnapshot.getKey();
+                        int existingQuantity = cartItemSnapshot.child("quantity").getValue(Integer.class);
+                        int newQuantity = existingQuantity + 1;
+
+                        cartItemsRef.child(existingCartItemID).child("quantity").setValue(newQuantity)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            showToast("Added to cart");
+                                        } else {
+                                            showToast("Failed to add to cart");
+                                        }
+                                    }
+                                });
+                    }
+                } else {
+                    // Food item does not exist in the cart, create a new cart item
+                    CartModel cartItem = new CartModel(cartID, foodID, 1); // 1 represents initial quantity
+                    String newCartItemID = cartItemsRef.push().getKey();
+
+                    cartItemsRef.child(newCartItemID).setValue(cartItem)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        showToast("Added to cart");
+                                    } else {
+                                        showToast("Failed to add to cart");
+                                    }
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle error
             }
         });
     }
@@ -160,6 +221,7 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
 
         ImageView imageView, add2Favorite;
         TextView name, price, description, rating, timing;
+        Button add2Cart;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -171,6 +233,7 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
             description = itemView.findViewById(R.id.detailed_des);
             rating = itemView.findViewById(R.id.order_time);
             timing = itemView.findViewById(R.id.detailed_timing);
+            add2Cart = itemView.findViewById(R.id.add2cart);
         }
     }
 }

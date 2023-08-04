@@ -74,7 +74,7 @@ public class SecondFragment extends Fragment {
         String foodDes = foodItem.child("foodDescription").getValue(String.class);
         String foodTiming = foodItem.child("foodTiming").getValue(String.class);
         String foodRating = foodItem.child("foodRatting").getValue(String.class);
-        String foodPrice = foodItem.child("foodPrice").getValue(Integer.class) + ",00$";
+        double foodPrice = foodItem.child("foodPrice").getValue(double.class);
         int imageResId = getResourceIdByName(foodItem.child("foodImage").getValue(String.class));
 
         HomeVerModel homeVerModels = new HomeVerModel(foodID, foodName, foodDes, imageResId, foodPrice, foodRating, foodTiming, foodType);
