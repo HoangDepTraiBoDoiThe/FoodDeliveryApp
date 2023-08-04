@@ -29,6 +29,8 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
 
     Context context;
 
+    int curQuantity = 1;
+
     public DetailedDailyAdapter(List<HomeVerModel> homeVerModels, Context context) {
         this.homeVerModels = homeVerModels;
         this.context = context;
@@ -51,10 +53,12 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
         holder.description.setText(homeVerModel.getDescription());
         holder.rating.setText(homeVerModel.getRating());
         holder.timing.setText(homeVerModel.getTiming());
+        holder.quantity.setText(String.valueOf(1));
+
         holder.add2Cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addToCart(homeVerModels.get(position).getId());
+                addToCart(homeVerModels.get(position).getId(), position);
             }
         });
 
@@ -69,6 +73,29 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
                     holder.add2Favorite.setImageResource(R.drawable.favorite_filled);
                 } else {
                     holder.add2Favorite.setImageResource(R.drawable.favorite_border);
+                }
+            }
+        });
+
+        String foodPrice = String.format(Locale.getDefault(), "%.2f", homeVerModels.get(position).getPrice());
+        holder.totalPrice.setText(foodPrice);
+
+        holder.incrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                homeVerModel.setCurQuan(homeVerModel.getCurQuan() + 1);
+                holder.quantity.setText(String.valueOf(homeVerModel.getCurQuan()));
+                holder.totalPrice.setText(CalculateTotalPrice(homeVerModel.getCurQuan(), homeVerModels.get(position).getPrice()) + "");
+            }
+        });
+
+        holder.decrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (homeVerModel.getCurQuan() > 1) {
+                    homeVerModel.setCurQuan(homeVerModel.getCurQuan() - 1);
+                    holder.quantity.setText(String.valueOf(homeVerModel.getCurQuan()));
+                    holder.totalPrice.setText(CalculateTotalPrice(homeVerModel.getCurQuan(), homeVerModels.get(position).getPrice()) + "");
                 }
             }
         });
@@ -93,7 +120,12 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
             }
         });
     }
-    private void addToCart(String foodID) {
+
+    private double CalculateTotalPrice(int quantity, double price) {
+        return quantity * price;
+    }
+
+    private void addToCart(String foodID, int position) {
         DatabaseReference cartItemsRef = FirebaseDatabase.getInstance().getReference("cartItems");
 
         // Check if the food item already exists in the user's cart
@@ -106,7 +138,7 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
                     for (DataSnapshot cartItemSnapshot : dataSnapshot.getChildren()) {
                         String existingCartItemID = cartItemSnapshot.getKey();
                         int existingQuantity = cartItemSnapshot.child("quantity").getValue(Integer.class);
-                        int newQuantity = existingQuantity + 1;
+                        int newQuantity = existingQuantity + homeVerModels.get(position).getCurQuan();
 
                         cartItemsRef.child(existingCartItemID).child("quantity").setValue(newQuantity)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -122,7 +154,7 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
                     }
                 } else {
                     // Food item does not exist in the cart, create a new cart item
-                    CartModel cartItem = new CartModel(cartID, foodID, 1); // 1 represents initial quantity
+                    CartModel cartItem = new CartModel(cartID, foodID, homeVerModels.get(position).getCurQuan()); // 1 represents initial quantity
                     String newCartItemID = cartItemsRef.push().getKey();
 
                     cartItemsRef.child(newCartItemID).setValue(cartItem)
@@ -222,6 +254,10 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
         ImageView imageView, add2Favorite;
         TextView name, price, description, rating, timing;
         Button add2Cart;
+        Button incrementButton;
+        Button decrementButton;
+        TextView totalPrice;
+        TextView quantity;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -234,6 +270,11 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
             rating = itemView.findViewById(R.id.order_time);
             timing = itemView.findViewById(R.id.detailed_timing);
             add2Cart = itemView.findViewById(R.id.add2cart);
+
+            incrementButton = itemView.findViewById(R.id.incrementButton);
+            decrementButton = itemView.findViewById(R.id.decrementButton);
+            totalPrice = itemView.findViewById(R.id.total_price);
+            quantity = itemView.findViewById(R.id.quantityEditText);
         }
     }
 }

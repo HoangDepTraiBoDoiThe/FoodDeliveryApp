@@ -10,6 +10,7 @@ public class HomeVerModel {
     String timing;
     String type;
     String id;
+    int curQuan = 1;
 
     boolean isFavorite;
 
@@ -40,6 +41,13 @@ public class HomeVerModel {
         this.isFavorite = isFavorite;
     }
 
+    public int getCurQuan() {
+        return curQuan;
+    }
+
+    public void setCurQuan(int curQuan) {
+        this.curQuan = curQuan;
+    }
 
     public int getImage() {
         return image;

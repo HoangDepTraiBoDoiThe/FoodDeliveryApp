@@ -14,7 +14,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.fooddeliveryapp.Activities.HomePage.FoodSearchResultActivity;
 import com.example.fooddeliveryapp.Adapters.Home.HomeHorAdapter;
 import com.example.fooddeliveryapp.Adapters.Home.HomeVerAdapter;
-import com.example.fooddeliveryapp.Adapters.Home.UpdateVerticalRec;
+import com.example.fooddeliveryapp.Adapters.Home.HomeIntrface;
 import com.example.fooddeliveryapp.Models.Home.HomeHorModel;
 import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements UpdateVerticalRec {
+public class HomeFragment extends Fragment implements HomeIntrface {
 
     private FragmentHomeBinding binding;
 
@@ -52,22 +52,6 @@ public class HomeFragment extends Fragment implements UpdateVerticalRec {
                 getContext().startActivity(intent);
             }
         });
-//        searchEditText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                // Perform search operation based on charSequence (user input)
-//                String searchQuery = charSequence.toString();
-//                performSearch(searchQuery);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//            }
-//        });
 
     ////// Horizontal
         homeHorModelList = new ArrayList<>();
@@ -105,19 +89,6 @@ public class HomeFragment extends Fragment implements UpdateVerticalRec {
 
     public void performSearch (String searchQuery)
     {
-//        DatabaseReference foodsRef = FirebaseDatabase.getInstance().getReference("foods");
-//        foodsRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-//                ArrayList<HomeVerModel> homeVerModels = new ArrayList<>();
-//                for (DataSnapshot foodItem : snapshot.getChildren()) {
-//                    String foodName = foodItem.child("foodName").getValue(String.class);
-//                    if (searchQuery.equals(foodName)) {
-//                        homeVerModels.add(getFoodItemDataFromFirebase(foodItem));
-//                    }
-//                }
-//                showSearchResultsFragment(homeVerModels);
-//            }
         DatabaseReference foodsRef = FirebaseDatabase.getInstance().getReference("foods");
         Query query = foodsRef.orderByChild("foodType").startAt(searchQuery).endAt(searchQuery + "\uf8ff"); //[chQuery).endAt(searchQuery + "\uf8ff");]
 

@@ -29,10 +29,19 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
     private BottomSheetDialog bottomSheetDialog;
     Context context;
     ArrayList<HomeVerModel> homeVerModels;
+    int newQuantity;
+    int curQuantity = 1;
+
+    HomeIntrface homeIntrface;
 
     public HomeVerAdapter(Context context, ArrayList<HomeVerModel> homeVerModels) {
         this.context = context;
         this.homeVerModels = homeVerModels;
+    }
+    public HomeVerAdapter(Context context, ArrayList<HomeVerModel> homeVerModels, HomeIntrface homeIntrface) {
+        this.context = context;
+        this.homeVerModels = homeVerModels;
+        this.homeIntrface = homeIntrface;
     }
     @NonNull
     @NotNull
@@ -77,12 +86,39 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
                 TextView bottomPrice = sheetView.findViewById(R.id.bottom_sheet_price);
                 TextView bottomTime = sheetView.findViewById(R.id.bottom_sheet_timing);
                 Button bottomAdd2Cart = sheetView.findViewById(R.id.add2cart);
+                Button incrementButton = sheetView.findViewById(R.id.incrementButton);
+                Button decrementButton = sheetView.findViewById(R.id.decrementButton);
+                TextView totalPrice = sheetView.findViewById(R.id.total_price);
+                TextView quantity = sheetView.findViewById(R.id.quantityEditText);
+
+                String foodPrice = String.format(Locale.getDefault(), "%.2f", homeVerModels.get(position).getPrice());
+                totalPrice.setText(foodPrice);
 
                 bottomName.setText(mName);
-                bottomPrice.setText(String.format(Locale.getDefault(), "%.2f", homeVerModels.get(position).getPrice()));
+                bottomPrice.setText(foodPrice);
                 bottomRating.setText(mRate);
                 bottomTime.setText(mTime);
                 bottomImg.setImageResource(mImage);
+
+                incrementButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        curQuantity++;
+                        quantity.setText(String.valueOf(curQuantity));
+                        totalPrice.setText(CalculateTotalPrice(curQuantity, homeVerModels.get(position).getPrice()) + "");
+                    }
+                });
+
+                decrementButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (curQuantity >= 1) {
+                            curQuantity--;
+                            quantity.setText(String.valueOf(curQuantity));
+                            totalPrice.setText(CalculateTotalPrice(curQuantity, homeVerModels.get(position).getPrice()) + "");
+                        }
+                    }
+                });
 
                 bottomAdd2Cart.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -133,6 +169,10 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
         });
     }
 
+    private double CalculateTotalPrice(int quantity, double price) {
+        return quantity * price;
+    }
+
     private void addToCart(String foodID) {
         DatabaseReference cartItemsRef = FirebaseDatabase.getInstance().getReference("cartItems");
 
@@ -146,7 +186,7 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
                     for (DataSnapshot cartItemSnapshot : dataSnapshot.getChildren()) {
                         String existingCartItemID = cartItemSnapshot.getKey();
                         int existingQuantity = cartItemSnapshot.child("quantity").getValue(Integer.class);
-                        int newQuantity = existingQuantity + 1;
+                        int newQuantity = existingQuantity + curQuantity;
 
                         cartItemsRef.child(existingCartItemID).child("quantity").setValue(newQuantity)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -162,7 +202,7 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
                     }
                 } else {
                     // Food item does not exist in the cart, create a new cart item
-                    CartModel cartItem = new CartModel(cartID, foodID, 1); // 1 represents initial quantity
+                    CartModel cartItem = new CartModel(cartID, foodID, curQuantity); // 1 represents initial quantity
                     String newCartItemID = cartItemsRef.push().getKey();
 
                     cartItemsRef.child(newCartItemID).setValue(cartItem)
@@ -277,6 +317,7 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
             timing = itemView.findViewById(R.id.timing);
             rating = itemView.findViewById(R.id.rating);
             price = itemView.findViewById(R.id.price);
+
         }
     }
 }

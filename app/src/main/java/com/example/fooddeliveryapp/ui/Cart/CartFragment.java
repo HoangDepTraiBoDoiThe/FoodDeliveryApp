@@ -223,7 +223,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
 
         String orderID = ordersRef.push().getKey();
         String orderDate = getCurrentDateTime();
-        String paymentMethod = Address;
+        String paymentMethod = Method.length() > 0 ? Method : "Cod";
         String shippingAddress = Address;
         String status = "Pending";
         OrderModel newOrder = new OrderModel(orderID, status, orderDate, shippingAddress, paymentMethod, userID);

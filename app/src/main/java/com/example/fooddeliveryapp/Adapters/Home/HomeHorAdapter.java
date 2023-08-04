@@ -10,15 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.fooddeliveryapp.Models.Home.HomeHorModel;
-import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
-import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 
 public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHolder> {
 
-    UpdateVerticalRec updateVerticalRec;
+    HomeIntrface homeIntrface;
     Activity activity;
     ArrayList<HomeHorModel> homeHorModels;
 
@@ -26,8 +24,8 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
     boolean select = true;
     int row_index = -1;
 
-    public HomeHorAdapter(UpdateVerticalRec updateVerticalRec, Activity activity, ArrayList<HomeHorModel> homeHorModels) {
-        this.updateVerticalRec = updateVerticalRec;
+    public HomeHorAdapter(HomeIntrface homeIntrface, Activity activity, ArrayList<HomeHorModel> homeHorModels) {
+        this.homeIntrface = homeIntrface;
         this.activity = activity;
         this.homeHorModels = homeHorModels;
     }
@@ -46,7 +44,7 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
         holder.name.setText(homeHorModels.get(AdapterPosition).getName());
 
         if (check) {
-            updateVerticalRec.getFoodsDataFromFirebaseByType(AdapterPosition, "pizza");
+            homeIntrface.getFoodsDataFromFirebaseByType(AdapterPosition, "pizza");
             check = false;
         }
 
@@ -58,7 +56,7 @@ public class HomeHorAdapter extends RecyclerView.Adapter<HomeHorAdapter.ViewHold
 
                 // Load data for the selected item from Firebase
                 String selectedHorItem = homeHorModels.get(AdapterPosition).getFoodType();
-                updateVerticalRec.getFoodsDataFromFirebaseByType(AdapterPosition, selectedHorItem);
+                homeIntrface.getFoodsDataFromFirebaseByType(AdapterPosition, selectedHorItem);
             }
         });
 

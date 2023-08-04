@@ -5,7 +5,7 @@ import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 
-public interface UpdateVerticalRec {
+public interface HomeIntrface {
     public void CallBack(int position, ArrayList<HomeVerModel> list);
     public void getFoodsDataFromFirebaseByType(int position, String typeOfFood);
     public HomeVerModel getFoodItemDataFromFirebase(DataSnapshot foodItem);
