@@ -50,7 +50,7 @@
             android:layout_marginTop="100dp"
             android:layout_gravity="center"
             android:textColorHint="@color/white"
-            android:id="@+id/editTextText"
+            android:id="@+id/edtEmailReg"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -61,7 +61,7 @@
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:textColorHint="@color/white"
-            android:id="@+id/editTextText2"
+            android:id="@+id/edtPasswordReg"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -70,7 +70,7 @@
 
         <Button
             android:layout_marginTop="100dp"
-            android:id="@+id/button"
+            android:id="@+id/btnReg"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
 
             <TextView
                 android:layout_margin="10dp"
-                android:id="@+id/textView13"
+                android:id="@+id/txvLog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
