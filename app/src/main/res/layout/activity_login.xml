@@ -49,7 +49,7 @@
             android:layout_marginTop="100dp"
             android:layout_gravity="center"
             android:textColorHint="@color/white"
-            android:id="@+id/editTextText"
+            android:id="@+id/edtEmailLog"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -60,16 +60,16 @@
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:textColorHint="@color/white"
-            android:id="@+id/editTextText2"
+            android:id="@+id/edtPasswordLog"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:hint="Password" />
 
         <Button
             android:layout_marginTop="100dp"
-            android:id="@+id/button"
+            android:id="@+id/btnLog"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,10 +90,10 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:text="Already Register ?" />
-
+s
             <TextView
                 android:layout_margin="10dp"
-                android:id="@+id/textView13"
+                android:id="@+id/txvReg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
