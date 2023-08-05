@@ -36,4 +36,15 @@
     <string name="dinner">Dinner</string>
     <string name="make_order">Make Order</string>
     <string name="orders">Orders</string>
+
+    <string name="select_payment_method">Select Payment Method</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="place_order">Place Order</string>
+
+    <string-array name="payment_methods">
+        <item>Credit Card</item>
+        <item>PayPal</item>
+        <item>Cod</item>
+
+    </string-array>
 </resources>

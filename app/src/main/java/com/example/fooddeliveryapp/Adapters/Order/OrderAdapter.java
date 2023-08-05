@@ -3,6 +3,7 @@ package com.example.fooddeliveryapp.Adapters.Order;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,9 +44,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         OrderModel order = orderList.get(position);
-        holder.orderStatus.setText(order.getOrderStatus());
+        holder.orderStatus.setText(order.getStatus());
         holder.orderDate.setText(order.getOrderDate());
         holder.orderPrice.setText(order.getTotalPrice());
+        holder.orderStatusImage.setImageResource(order.getOrderStatusImage());
 
         // Set click listener for the item view
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +67,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        ImageView orderStatusImage;
         TextView orderStatus, orderDate, orderPrice;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
@@ -73,6 +76,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             orderStatus = itemView.findViewById(R.id.order_status);
             orderDate = itemView.findViewById(R.id.order_date);
             orderPrice = itemView.findViewById(R.id.order_total_price);
+            orderStatusImage = itemView.findViewById(R.id.order_status_img);
         }
     }
 }

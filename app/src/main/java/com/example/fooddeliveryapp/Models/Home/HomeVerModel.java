@@ -6,10 +6,11 @@ public class HomeVerModel {
     String name;
     String description;
     String rating;
-    String price;
+    double price;
     String timing;
     String type;
     String id;
+    int curQuan = 1;
 
     boolean isFavorite;
 
@@ -17,7 +18,7 @@ public class HomeVerModel {
 
     }
 
-    public HomeVerModel(String id, String name, String description, int image, String price, String rating, String timing, String type) {
+    public HomeVerModel(String id, String name, String description, int image, double price, String rating, String timing, String type) {
         this.image = image;
         this.id = id;
         this.name = name;
@@ -28,7 +29,7 @@ public class HomeVerModel {
         this.type = type;
     }
 
-    public HomeVerModel(String id, String name, String description, int image, String price, String rating, String timing, String type, boolean isFavorite) {
+    public HomeVerModel(String id, String name, String description, int image, double price, String rating, String timing, String type, boolean isFavorite) {
         this.image = image;
         this.id = id;
         this.name = name;
@@ -40,6 +41,13 @@ public class HomeVerModel {
         this.isFavorite = isFavorite;
     }
 
+    public int getCurQuan() {
+        return curQuan;
+    }
+
+    public void setCurQuan(int curQuan) {
+        this.curQuan = curQuan;
+    }
 
     public int getImage() {
         return image;
@@ -73,11 +81,11 @@ public class HomeVerModel {
         this.rating = rating;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

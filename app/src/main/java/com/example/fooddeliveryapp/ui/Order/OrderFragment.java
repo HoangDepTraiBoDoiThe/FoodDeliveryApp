@@ -17,6 +17,8 @@ import com.google.common.util.concurrent.AtomicDouble;
 import com.google.firebase.database.*;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class OrderFragment extends Fragment {
@@ -58,8 +60,7 @@ public class OrderFragment extends Fragment {
         startActivity(intent);
     }
 
-
-    String hardcodedUserID = "1";
+    String hardcodedUserID = "0";
     private void fetchOrdersFromFirebase() {
         DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("orders");
 
@@ -69,19 +70,29 @@ public class OrderFragment extends Fragment {
                 orderList.clear();
 
                 for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
-                    String orderID = orderSnapshot.getKey();
-                    String orderStatus = orderSnapshot.child("status").getValue(String.class);
-                    String orderDate = orderSnapshot.child("orderDate").getValue(String.class);
-                    String orderAddress = orderSnapshot.child("shippingAddress").getValue(String.class);
-                    String paymentMethod = orderSnapshot.child("paymentMethod").getValue(String.class);
-                    String userID = orderSnapshot.child("userId").getValue(String.class);
+                    if (orderSnapshot.exists()) {
+                        String orderID = orderSnapshot.getKey();
+                        String orderStatus = orderSnapshot.child("status").getValue(String.class);
+                        String orderDate = orderSnapshot.child("orderDate").getValue(String.class);
+                        String orderAddress = orderSnapshot.child("shippingAddress").getValue(String.class);
+                        String paymentMethod = orderSnapshot.child("paymentMethod").getValue(String.class);
+                        String userID = orderSnapshot.child("userID").getValue(String.class);
+                        int statusImage = getResourceIdByName(orderStatus.toLowerCase());
 
-                    if (userID != null && userID.equals(hardcodedUserID)) {
-                        OrderModel order = new OrderModel(orderID, orderStatus, orderDate, orderAddress, paymentMethod, userID);
-                        orderList.add(order);
-                        fetchOrderItemsFromFirebase(order);
+                        if (userID != null && userID.equals(hardcodedUserID)) {
+                            OrderModel order = new OrderModel(orderID, orderStatus, orderDate, orderAddress, paymentMethod, userID, statusImage);
+                            orderList.add(order);
+                            GetOrderTotalPrice(order);
+                        }
                     }
                 }
+                Collections.sort(orderList, new Comparator<OrderModel>() {
+                    @Override
+                    public int compare(OrderModel order1, OrderModel order2) {
+                        return order1.getOrderDate().compareTo(order2.getOrderDate());
+                    }
+                });
+
                 orderAdapter.notifyDataSetChanged();
             }
 
@@ -91,7 +102,8 @@ public class OrderFragment extends Fragment {
             }
         });
     }
-    private void fetchOrderItemsFromFirebase(OrderModel order) {
+
+    private void GetOrderTotalPrice(OrderModel order) {
         DatabaseReference orderItemsRef = FirebaseDatabase.getInstance().getReference("orderItems");
         Query query = orderItemsRef.orderByChild("orderID").equalTo(order.getOrderID());
 
@@ -111,10 +123,7 @@ public class OrderFragment extends Fragment {
                             if (foodSnapshot.exists()) {
                                 double foodPrice = foodSnapshot.child("foodPrice").getValue(Double.class);
                                 totalPrice.addAndGet(foodPrice * quantity);
-
                                 order.setTotalPrice(String.valueOf(totalPrice.get()));
-
-                                // Add the order to the list
                                 handleOrder(order);
                             }
                         }
@@ -143,6 +152,12 @@ public class OrderFragment extends Fragment {
         orderAdapter.notifyDataSetChanged();
     }
 
-
+    // Helper method to get resource ID by name
+    private int getResourceIdByName(String name) {
+        if (getContext() != null) {
+            return getResources().getIdentifier(name, "drawable", getContext().getPackageName());
+        } else {
+            return 0;
+        }
+    }
 }
-
