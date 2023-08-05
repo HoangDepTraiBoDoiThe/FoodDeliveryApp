@@ -13,9 +13,4 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
-
-    public void Register(View view) {
-        startActivities(new Intent[] {new Intent(LoginActivity.this, RegistrationActivity.class)});
-
-    }
 }
