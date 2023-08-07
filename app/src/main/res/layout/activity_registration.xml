@@ -25,31 +25,34 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginTop="120dp"
-            android:layout_gravity="center"
-            android:fontFamily="@font/lobster"
-            android:textColor="@color/white"
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="33sp"
-            android:text="Los Pollos Hermanaos" />
+                android:layout_marginTop="120dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/lobster"
+                android:textColor="@color/white"
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="33sp"
+                android:text="Los Pollos Hermanaos"
+                />
 
         <TextView
-            android:layout_marginTop="30dp"
-            android:textColor="@color/white"
-            android:id="@+id/textView6"
-            android:textSize="19sp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Register" />
+                android:layout_marginTop="30dp"
+                android:textColor="@color/white"
+                android:id="@+id/textView6"
+                android:textSize="19sp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                />
 
         <EditText
 
             android:layout_marginTop="100dp"
             android:layout_gravity="center"
             android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:id="@+id/edtEmailReg"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -59,6 +62,8 @@
 
         <EditText
             android:layout_marginTop="10dp"
+            android:textColor="@color/white"
+
             android:layout_gravity="center"
             android:textColorHint="@color/white"
             android:id="@+id/edtPasswordReg"
@@ -68,8 +73,34 @@
             android:inputType="text"
             android:hint="Password" />
 
+        <EditText
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textColorHint="@color/white"
+                android:id="@+id/edtAddressReg"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+
+                android:ems="10"
+                android:inputType="text"
+                android:hint="Address" />
+
+        <EditText
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:id="@+id/edtPhoneReg"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number|text"
+                android:hint="Phone numb"
+                />
+
         <Button
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="70dp"
             android:id="@+id/btnReg"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
