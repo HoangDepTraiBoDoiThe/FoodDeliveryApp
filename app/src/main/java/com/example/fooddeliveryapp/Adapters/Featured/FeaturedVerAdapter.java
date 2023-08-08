@@ -13,8 +13,8 @@ import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -23,6 +23,9 @@ public class FeaturedVerAdapter extends RecyclerView.Adapter<FeaturedVerAdapter.
 
     List<HomeVerModel> list;
     Context context;
+
+    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String cartId;
 
     public FeaturedVerAdapter(List<HomeVerModel> list, Context context) {
         this.list = list;
@@ -61,7 +64,9 @@ public class FeaturedVerAdapter extends RecyclerView.Adapter<FeaturedVerAdapter.
         });
     }
 
-    String hardcodedUserID = "0";
+
+
+    String hardcodedUserID = userId;
     private void removeFromFavorite(String foodID) {
         DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("users")
                 .child(hardcodedUserID).child("favorites");

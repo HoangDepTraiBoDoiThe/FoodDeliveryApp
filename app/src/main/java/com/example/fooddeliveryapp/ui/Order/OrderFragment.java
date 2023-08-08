@@ -14,6 +14,7 @@ import com.example.fooddeliveryapp.Adapters.Order.OrderAdapter;
 import com.example.fooddeliveryapp.Models.Order.OrderModel;
 import com.example.fooddeliveryapp.R;
 import com.google.common.util.concurrent.AtomicDouble;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class OrderFragment extends Fragment {
     private List<OrderModel> orderList;
     private OrderAdapter orderAdapter;
     private RecyclerView recyclerView;
+    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     public OrderFragment() {
 
@@ -60,7 +62,6 @@ public class OrderFragment extends Fragment {
         startActivity(intent);
     }
 
-    String hardcodedUserID = "0";
     private void fetchOrdersFromFirebase() {
         DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("orders");
 
@@ -74,12 +75,12 @@ public class OrderFragment extends Fragment {
                         String orderID = orderSnapshot.getKey();
                         String orderStatus = orderSnapshot.child("status").getValue(String.class);
                         String orderDate = orderSnapshot.child("orderDate").getValue(String.class);
-                        String orderAddress = orderSnapshot.child("shippingAddress").getValue(String.class);
+                        String orderAddress = orderSnapshot.child("orderAddress").getValue(String.class);
                         String paymentMethod = orderSnapshot.child("paymentMethod").getValue(String.class);
                         String userID = orderSnapshot.child("userID").getValue(String.class);
                         int statusImage = getResourceIdByName(orderStatus.toLowerCase());
 
-                        if (userID != null && userID.equals(hardcodedUserID)) {
+                        if (userID != null && userID.equals(userId)) {
                             OrderModel order = new OrderModel(orderID, orderStatus, orderDate, orderAddress, paymentMethod, userID, statusImage);
                             orderList.add(order);
                             GetOrderTotalPrice(order);

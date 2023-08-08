@@ -39,7 +39,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     String status = dataSnapshot.child("status").getValue(String.class);
                     String orderDate = dataSnapshot.child("orderDate").getValue(String.class);
                     String paymentMethod = dataSnapshot.child("paymentMethod").getValue(String.class);
-                    String shippingAddress = dataSnapshot.child("shippingAddress").getValue(String.class);
+                    String shippingAddress = dataSnapshot.child("orderAddress").getValue(String.class);
 
                     TextView totalPriceTextView = findViewById(R.id.total_price);
                     totalPriceTextView.setText(totalPrice);

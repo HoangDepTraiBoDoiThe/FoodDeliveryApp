@@ -25,7 +25,7 @@
         android:orientation="vertical">
 
         <TextView
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="70dp"
                 android:layout_gravity="center"
                 android:fontFamily="@font/lobster"
                 android:textColor="@color/white"
@@ -49,7 +49,7 @@
 
         <EditText
 
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:layout_gravity="center"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
@@ -99,13 +99,24 @@
                 android:hint="Phone numb"
                 />
 
+
         <Button
-            android:layout_marginTop="70dp"
-            android:id="@+id/btnReg"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Register" />
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:padding="14dp"
+                android:text="@string/register"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent=".8"
+                android:id="@+id/btnReg"
+                android:background="@drawable/btn_gb_design"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="70dp"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintTop_toBottomOf="@+id/searchEditText"
+                />
 
         <LinearLayout
             android:layout_marginTop="20dp"

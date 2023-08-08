@@ -12,16 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.fooddeliveryapp.Adapters.Cart.CartAdapter;
 import com.example.fooddeliveryapp.Adapters.Home.HomeVerAdapter;
-import com.example.fooddeliveryapp.Models.Cart.CartModel;
-import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
+import com.example.fooddeliveryapp.Models.Cart.CartItemModel;
 import com.example.fooddeliveryapp.Models.Order.OrderItemModel;
 import com.example.fooddeliveryapp.Models.Order.OrderModel;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.databinding.FragmentMyCartBinding;
-import com.google.common.util.concurrent.AtomicDouble;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,7 +29,7 @@ import java.util.Locale;
 
 public class CartFragment extends Fragment implements CartAdapter.CartAdapterCallback{
 
-    ArrayList<CartModel> cartModelList;
+    ArrayList<CartItemModel> cartItemModelList;
     ArrayList<HomeVerAdapter> foodItem;
     CartAdapter cartAdapter;
     RecyclerView recyclerView;
@@ -42,6 +40,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
     TextView cartTotalPrice_text;
     DatabaseReference cartItemRef;
     AlertDialog dialog;
+    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     private FragmentMyCartBinding binding;
     public CartFragment() {
@@ -67,10 +66,10 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
             }
         });
 
-        cartModelList = new ArrayList<>();
+        cartItemModelList = new ArrayList<>();
         foodItem = new ArrayList<>();
 
-        cartAdapter = new CartAdapter(cartModelList, cartTotalPrice, this, getContext());
+        cartAdapter = new CartAdapter(cartItemModelList, cartTotalPrice, this, getContext());
         recyclerView.setAdapter(cartAdapter);
 
         GetCartIDFromFirebase();
@@ -81,11 +80,10 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
         return  view;
     }
 
-    String hardcodedUserID = "0";
     private void GetCartIDFromFirebase() {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users");
 
-        userRef.child(hardcodedUserID).addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -106,7 +104,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
         cartRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cartModelList.clear();
+                cartItemModelList.clear();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot cartSnapshot : dataSnapshot.getChildren()) {
                         String cartID = cartSnapshot.child("cartID").getValue(String.class);
@@ -130,8 +128,8 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
                                                 double foodPrice = foodSnap.child("foodPrice").getValue(Integer.class);
                                                 int imageResId = getResourceIdByName(foodSnap.child("foodImage").getValue(String.class));
 
-                                                CartModel cart = new CartModel(cartID, cartItemID, cartFoodID, quantity, imageResId, foodName, foodDes, foodRating, foodPrice, foodTiming, foodType);
-                                                cartModelList.add(cart);
+                                                CartItemModel cart = new CartItemModel(cartID, cartItemID, cartFoodID, quantity, imageResId, foodName, foodDes, foodRating, foodPrice, foodTiming, foodType);
+                                                cartItemModelList.add(cart);
                                                 cartTotalPrice += cart.getItemTotalPrice();
                                                 onQuantityChanged(cartTotalPrice);
                                             }
@@ -168,7 +166,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
     private ValueEventListener cartItemListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            cartModelList.clear();
+            cartItemModelList.clear();
             if (dataSnapshot.exists()) {
                 for (DataSnapshot cartSnapshot : dataSnapshot.getChildren()) {
                     String cartID = cartSnapshot.child("cartID").getValue(String.class);
@@ -176,7 +174,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
                     String cartFoodID = cartSnapshot.child("foodID").getValue(String.class);
                     int quantity = cartSnapshot.child("quantity").getValue(Integer.class);
 
-                    if (cartID != null && cartID.equals(hardcodedUserID)) {
+                    if (cartID != null && cartID.equals(userId)) {
                         DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("foods");
                         foodRef.child(cartFoodID).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -191,8 +189,8 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
                                     double foodPrice = foodSnap.child("foodPrice").getValue(Integer.class);
                                     int imageResId = getResourceIdByName(foodSnap.child("foodImage").getValue(String.class));
 
-                                    CartModel cart = new CartModel(cartID, cartItemID, cartFoodID, quantity, imageResId, foodName, foodDes, foodRating, foodPrice, foodTiming, foodType);
-                                    cartModelList.add(cart);
+                                    CartItemModel cart = new CartItemModel(cartID, cartItemID, cartFoodID, quantity, imageResId, foodName, foodDes, foodRating, foodPrice, foodTiming, foodType);
+                                    cartItemModelList.add(cart);
                                     cartTotalPrice += cart.getItemTotalPrice();
                                     onQuantityChanged(cartTotalPrice);
                                     cartAdapter.notifyDataSetChanged();
@@ -219,7 +217,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
     private void createOrder(String Method, String Address) {
         DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("orders");
         DatabaseReference orderItemsRef = FirebaseDatabase.getInstance().getReference("orderItems");
-        String userID = hardcodedUserID;
+        String userID = userId;
 
         String orderID = ordersRef.push().getKey();
         String orderDate = getCurrentDateTime();
@@ -303,7 +301,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartAdapterCal
     private void clearCart() {
         DatabaseReference cartItemsRef = FirebaseDatabase.getInstance().getReference("cartItems");
         cartItemsRef.removeValue(); // Remove all cart items
-        cartModelList.clear();
+        cartItemModelList.clear();
         cartAdapter.notifyDataSetChanged();
 
         // Update UI and notify the user that the order has been placed

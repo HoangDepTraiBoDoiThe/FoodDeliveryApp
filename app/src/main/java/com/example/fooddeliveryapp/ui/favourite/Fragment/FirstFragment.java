@@ -13,6 +13,7 @@ import com.example.fooddeliveryapp.Adapters.Featured.FeaturedVerAdapter;
 import com.example.fooddeliveryapp.Models.Featured.FeaturedModel;
 import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class FirstFragment extends Fragment {
     ///////////// Featured ver Rec
     RecyclerView recyclerView2;
     FeaturedVerAdapter featuredVerAdapter;
+    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     public FirstFragment() {
 
@@ -61,12 +63,10 @@ public class FirstFragment extends Fragment {
         return view;
     }
 
-    String hardcodedUserID = "0";
-
     private void GetFavouriteFoodFromFirebase() {
         //FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        DatabaseReference currentUser = FirebaseDatabase.getInstance().getReference("users").child(hardcodedUserID);
+        DatabaseReference currentUser = FirebaseDatabase.getInstance().getReference("users").child(userId);
 
         currentUser.addValueEventListener(new ValueEventListener() {
             @Override

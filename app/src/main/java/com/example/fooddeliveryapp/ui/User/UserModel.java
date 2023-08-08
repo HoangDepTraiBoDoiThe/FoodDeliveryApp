@@ -4,7 +4,7 @@ public class UserModel {
 
     String userId, phoneNumber, address;
 
-    public UserModel (String userId, String phoneNumber, String address){
+    public UserModel (String phoneNumber, String address){
         this.userId = userId;
         this.phoneNumber = phoneNumber;
         this.address = address;

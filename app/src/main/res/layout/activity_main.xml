@@ -10,28 +10,7 @@
         tools:openDrawer="start"
         >
 
-    <com.google.android.material.navigation.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            app:headerLayout="@layout/nav_header_main"
-            android:background="@color/gray"
-            app:itemIconTint="@color/white"
-            app:itemTextColor="@color/white"
-            >
 
-        <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/log_out"
-                android:layout_gravity="bottom"
-                android:textAllCaps="false"
-                android:textStyle="bold"
-                android:padding="15dp"
-                />
-    </com.google.android.material.navigation.NavigationView>
 
     <LinearLayout
             android:id="@+id/container"
@@ -60,5 +39,27 @@
 
 
     </LinearLayout>
+    <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_main"
+            android:background="@color/gray"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            >
 
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnLogOut"
+                android:text="@string/log_out"
+                android:layout_gravity="bottom"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:padding="15dp"
+                />
+    </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

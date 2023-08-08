@@ -11,11 +11,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.fooddeliveryapp.Models.Cart.CartModel;
+import com.example.fooddeliveryapp.Models.Cart.CartItemModel;
 import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +29,7 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
     List<HomeVerModel> homeVerModels;
 
     Context context;
-
+    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     int curQuantity = 1;
 
     public DetailedDailyAdapter(List<HomeVerModel> homeVerModels, Context context) {
@@ -129,7 +130,7 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
         DatabaseReference cartItemsRef = FirebaseDatabase.getInstance().getReference("cartItems");
 
         // Check if the food item already exists in the user's cart
-        String cartID = hardcodedUserID;
+        String cartID = userId;
         cartItemsRef.orderByChild("foodID").equalTo(foodID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -154,7 +155,7 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
                     }
                 } else {
                     // Food item does not exist in the cart, create a new cart item
-                    CartModel cartItem = new CartModel(cartID, foodID, homeVerModels.get(position).getCurQuan()); // 1 represents initial quantity
+                    CartItemModel cartItem = new CartItemModel(cartID, foodID, homeVerModels.get(position).getCurQuan()); // 1 represents initial quantity
                     String newCartItemID = cartItemsRef.push().getKey();
 
                     cartItemsRef.child(newCartItemID).setValue(cartItem)
@@ -179,7 +180,7 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
     }
     private void fetchUserFavoritesFromServer(String foodID, DetailedDailyAdapter.OnFetchFavoritesListener listener) {
         DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("users")
-                .child(hardcodedUserID).child("favorites");
+                .child(userId).child("favorites");
 
         favoritesRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -201,11 +202,11 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
     interface OnFetchFavoritesListener {
         void onFavoritesFetched(List<String> favoriteFoodIDs);
     }
-    String hardcodedUserID = "0";
+
     private void addToFavorite(String foodID) {
         // Create a reference to the user's favorite list in the database
         DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("users")
-                .child(hardcodedUserID).child("favorites");
+                .child(userId).child("favorites");
 
         // Add the foodID to the user's favorite list
         favoritesRef.child(foodID).setValue(foodID.toString(), new DatabaseReference.CompletionListener() {
@@ -227,7 +228,7 @@ public class DetailedDailyAdapter extends RecyclerView.Adapter<DetailedDailyAdap
     private void removeFromFavorite(String foodID) {
         // Create a reference to the user's favorite list in the database
         DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("users")
-                .child(hardcodedUserID).child("favorites");
+                .child(userId).child("favorites");
 
         // Remove the foodID from the user's favorite list
         favoritesRef.child(foodID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {

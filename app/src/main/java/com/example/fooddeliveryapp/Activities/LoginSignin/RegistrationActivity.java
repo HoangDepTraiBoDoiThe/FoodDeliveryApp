@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fooddeliveryapp.Activities.HomePage.HomePage;
+import com.example.fooddeliveryapp.Models.Cart.CartModel;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.ui.User.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,6 +43,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = firebaseDatabase.getReference("users");
+        DatabaseReference cartsRef = firebaseDatabase.getReference("carts");
 
         txvLog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +89,10 @@ public class RegistrationActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
 
                                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                    UserModel user = new UserModel(userId, phoneN, address);
+                                    UserModel user = new UserModel(phoneN, address);
+                                    CartModel cartModel = new CartModel(userId);
                                     usersRef.child(userId).setValue(user);
+                                    cartsRef.child(userId).setValue(cartModel);
                                 }
                                 else {
                                     Toast.makeText(RegistrationActivity.this, "Authentication failed.",

@@ -11,12 +11,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.fooddeliveryapp.Models.Cart.CartModel;
+import com.example.fooddeliveryapp.Models.Cart.CartItemModel;
 import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,6 +34,9 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
     int curQuantity = 1;
 
     HomeIntrface homeIntrface;
+
+    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String cartId;
 
     public HomeVerAdapter(Context context, ArrayList<HomeVerModel> homeVerModels) {
         this.context = context;
@@ -177,7 +181,6 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
         DatabaseReference cartItemsRef = FirebaseDatabase.getInstance().getReference("cartItems");
 
         // Check if the food item already exists in the user's cart
-        String cartID = hardcodedUserID;
         cartItemsRef.orderByChild("foodID").equalTo(foodID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -201,8 +204,7 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
                                 });
                     }
                 } else {
-                    // Food item does not exist in the cart, create a new cart item
-                    CartModel cartItem = new CartModel(cartID, foodID, curQuantity); // 1 represents initial quantity
+                    CartItemModel cartItem = new CartItemModel(userId, foodID, curQuantity);
                     String newCartItemID = cartItemsRef.push().getKey();
 
                     cartItemsRef.child(newCartItemID).setValue(cartItem)
@@ -226,12 +228,10 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
         });
     }
 
-
-    String hardcodedUserID = "0";
     private void addToFavorite(String foodID) {
         // Create a reference to the user's favorite list in the database
         DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("users")
-                .child(hardcodedUserID).child("favorites");
+                .child(userId).child("favorites");
 
         // Add the foodID to the user's favorite list
         favoritesRef.child(foodID).setValue(foodID.toString(), new DatabaseReference.CompletionListener() {
@@ -251,7 +251,7 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
     private void removeFromFavorite(String foodID) {
         // Create a reference to the user's favorite list in the database
         DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("users")
-                .child(hardcodedUserID).child("favorites");
+                .child(userId).child("favorites");
 
         // Remove the foodID from the user's favorite list
         favoritesRef.child(foodID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -274,7 +274,7 @@ public class HomeVerAdapter extends RecyclerView.Adapter<HomeVerAdapter.ViewHold
 
     private void fetchUserFavoritesFromServer(String foodID, OnFetchFavoritesListener listener) {
         DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("users")
-                .child(hardcodedUserID).child("favorites");
+                .child(userId).child("favorites");
 
         favoritesRef.addValueEventListener(new ValueEventListener() {
             @Override

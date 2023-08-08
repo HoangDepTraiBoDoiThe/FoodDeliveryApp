@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.fooddeliveryapp.Models.Cart.CartModel;
+import com.example.fooddeliveryapp.Models.Cart.CartItemModel;
 import com.example.fooddeliveryapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,7 +26,7 @@ import java.util.Locale;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
-    ArrayList<CartModel> cartModels;
+    ArrayList<CartItemModel> cartItemModels;
 
     Context context;
 
@@ -35,8 +35,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     private CartAdapterCallback callback;
 
-    public CartAdapter(ArrayList<CartModel> list, double cartTotalPrice, CartAdapterCallback callback, Context context) {
-        this.cartModels = list;
+    public CartAdapter(ArrayList<CartItemModel> list, double cartTotalPrice, CartAdapterCallback callback, Context context) {
+        this.cartItemModels = list;
         this.cartTotalPrice = cartTotalPrice;
         this.callback = callback;
         this.context = context;
@@ -56,30 +56,30 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull @NotNull CartAdapter.ViewHolder holder, int position) {
 
-        CartModel cartModel = cartModels.get(position);
-        currentValue = cartModels.get(position).getQuantity();
-        holder.imageView.setImageResource(cartModels.get(position).getImage());
-        holder.name.setText(cartModels.get(position).getName());
-        holder.price.setText(Double.toString(cartModels.get(position).getPrice()));
-        holder.itemTotalPrice.setText(String.format(Locale.getDefault(), "%.2f", cartModels.get(position).getItemTotalPrice()));
-        holder.price.setText(String.format(Locale.getDefault(), "%.2f", cartModels.get(position).getPrice()));
-        holder.rating.setText(cartModels.get(position).getRating());
-        holder.quantityEditText.setText(String.valueOf(cartModels.get(position).getQuantity()));
+        CartItemModel cartItemModel = cartItemModels.get(position);
+        currentValue = cartItemModels.get(position).getQuantity();
+        holder.imageView.setImageResource(cartItemModels.get(position).getImage());
+        holder.name.setText(cartItemModels.get(position).getName());
+        holder.price.setText(Double.toString(cartItemModels.get(position).getPrice()));
+        holder.itemTotalPrice.setText(String.format(Locale.getDefault(), "%.2f", cartItemModels.get(position).getItemTotalPrice()));
+        holder.price.setText(String.format(Locale.getDefault(), "%.2f", cartItemModels.get(position).getPrice()));
+        holder.rating.setText(cartItemModels.get(position).getRating());
+        holder.quantityEditText.setText(String.valueOf(cartItemModels.get(position).getQuantity()));
 
         holder.incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int newQuantity = cartModel.getQuantity() + 1;
-                updateCartItemQuantity(cartModel.getCartItemID(), newQuantity);
+                int newQuantity = cartItemModel.getQuantity() + 1;
+                updateCartItemQuantity(cartItemModel.getCartItemID(), newQuantity);
             }
         });
 
         holder.decrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int newQuantity = cartModel.getQuantity() - 1;
+                int newQuantity = cartItemModel.getQuantity() - 1;
                 if (newQuantity >= 1) {
-                    updateCartItemQuantity(cartModel.getCartItemID(), newQuantity);
+                    updateCartItemQuantity(cartItemModel.getCartItemID(), newQuantity);
                 }
             }
         });
@@ -92,7 +92,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     try {
                         int newQuantity = Integer.parseInt(inputValue);
                         if (newQuantity >= 1) {
-                            updateCartItemQuantity(cartModel.getCartItemID(), newQuantity);
+                            updateCartItemQuantity(cartItemModel.getCartItemID(), newQuantity);
                         } else {
                             holder.quantityEditText.setError("Enter a positive value");
                         }
@@ -129,7 +129,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private void deleteCartItem(int pos, ViewHolder holder) {
         int position = holder.getAdapterPosition();
         if (position != RecyclerView.NO_POSITION) {
-            CartModel cartItem = cartModels.get(position);
+            CartItemModel cartItem = cartItemModels.get(position);
             String cartItemID = cartItem.getCartItemID();
 
             DatabaseReference cartItemRef = FirebaseDatabase.getInstance().getReference("cartItems").child(cartItemID);
@@ -155,9 +155,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         cartItemRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                CartModel cartModel = dataSnapshot.getValue(CartModel.class);
-                if (cartModel != null) {
-                    double newTotalPrice = cartModel.getPrice() * newQuantity;
+                CartItemModel cartItemModel = dataSnapshot.getValue(CartItemModel.class);
+                if (cartItemModel != null) {
+                    double newTotalPrice = cartItemModel.getPrice() * newQuantity;
                     cartItemRef.child("totalPrice").setValue(newTotalPrice);
 
                     // Call a method to update the cart's total price
@@ -179,8 +179,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 cartTotalPrice = 0;
                 for (DataSnapshot cartSnapshot : dataSnapshot.getChildren()) {
-                    CartModel cartModel = cartSnapshot.getValue(CartModel.class);
-                    if (cartModel != null) {
+                    CartItemModel cartItemModel = cartSnapshot.getValue(CartItemModel.class);
+                    if (cartItemModel != null) {
                         String CartFoodID = cartSnapshot.child("foodID").getValue(String.class);
 
                         DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("foods");
@@ -192,12 +192,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                                     String foodID = foodsSnapshot.getKey();
                                     if (foodID.equals(CartFoodID)) {
                                         double foodPrice = foodsSnapshot.child("foodPrice").getValue(double.class);
-                                        cartTotalPrice += cartModel.getQuantity() * foodPrice;
-                                        String x = "";
+                                        cartTotalPrice += cartItemModel.getQuantity() * foodPrice;
                                     }
                                 }
                                 callback.onQuantityChanged(cartTotalPrice);
-
                             }
 
                             @Override
@@ -234,7 +232,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return cartModels.size();
+        return cartItemModels.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.fooddeliveryapp.Models.Cart.CartModel;
+import com.example.fooddeliveryapp.Models.Cart.CartItemModel;
 import com.example.fooddeliveryapp.Models.Home.HomeVerModel;
 import com.example.fooddeliveryapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -161,7 +161,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
                     }
                 } else {
                     // Food item does not exist in the cart, create a new cart item
-                    CartModel cartItem = new CartModel(cartID, foodID, 1); // 1 represents initial quantity
+                    CartItemModel cartItem = new CartItemModel(cartID, foodID, 1); // 1 represents initial quantity
                     String newCartItemID = cartItemsRef.push().getKey();
 
                     cartItemsRef.child(newCartItemID).setValue(cartItem)
